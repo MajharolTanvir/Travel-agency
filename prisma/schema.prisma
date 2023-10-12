@@ -51,15 +51,16 @@ model Division {
 }
 
 model District {
-  id            String   @id @default(uuid())
-  title         String
-  divisionImage String
-  divisionId    String
-  division      Division @relation(fields: [divisionId], references: [id])
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  Place         Place[]
-  Hotel         Hotel[]
+  id              String            @id @default(uuid())
+  title           String
+  divisionImage   String
+  divisionId      String
+  division        Division          @relation(fields: [divisionId], references: [id])
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  Place           Place[]
+  Hotel           Hotel[]
+  AddToCartFields AddToCartFields[]
 }
 
 model Place {
@@ -90,18 +91,19 @@ model Hotel {
 }
 
 model Room {
-  id             String           @id @default(uuid())
-  roomType       String
-  description    String?
-  roomImages     String[]
-  roomPrice      Int
-  checkInTime    String
-  checkOutTime   String
-  hotelId        String
-  hotel          Hotel            @relation(fields: [hotelId], references: [id])
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  RoomFacilities RoomFacilities[]
+  id              String            @id @default(uuid())
+  roomType        String
+  description     String?
+  roomImages      String[]
+  roomPrice       Int
+  checkInTime     String
+  checkOutTime    String
+  hotelId         String
+  hotel           Hotel             @relation(fields: [hotelId], references: [id])
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  RoomFacilities  RoomFacilities[]
+  AddToCartFields AddToCartFields[]
 }
 
 model FacilitiesOptions {
@@ -121,6 +123,18 @@ model RoomFacilities {
   facilitiesOptions   FacilitiesOptions @relation(fields: [FacilitiesOptionsId], references: [id])
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @updatedAt
+}
+
+model AddToCartFields {
+  id                String   @id @default(uuid())
+  roomId            String
+  districtId        String
+  byRoadTransportId String
+  byBoatTransportId String
+  byAirTransportId  String
+  packageId         String
+  room              Room     @relation(fields: [roomId], references: [id])
+  district          District @relation(fields: [districtId], references: [id])
 }
 
 enum UserRole {

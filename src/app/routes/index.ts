@@ -8,6 +8,7 @@ import { HotelRouter } from '../modules/hotel/hotel.router';
 import { RoomRouter } from '../modules/room/room.router';
 import { FacultiesRouter } from '../modules/facilitiesOptions/facilitiesOptions.router';
 import { RoomFacilitiesRouter } from '../modules/roomFacilities/roomFacilities.router';
+import { AddToCartRouter } from '../modules/addToCart/addToCart.router';
 
 const router = express.Router();
 
@@ -47,6 +48,10 @@ const moduleRoutes = [
   {
     path: '/room-facilities',
     routes: RoomFacilitiesRouter
+  },
+  {
+    path: '/add-to-cart',
+    routes: AddToCartRouter
   }
 ];
 

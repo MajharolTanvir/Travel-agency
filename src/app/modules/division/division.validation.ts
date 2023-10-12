@@ -1,14 +1,12 @@
-import { z } from "zod";
-
-
+import { z } from 'zod';
 
 const createDivision = z.object({
-    body: z.object({
-        title: z.string({
-            required_error: "Title is required"
-        })
-    })
-})
+  body: z.object({
+    title: z.string({
+      required_error: 'Title is required',
+    }),
+  }),
+});
 
 const updateDivision = z.object({
   body: z.object({
@@ -17,6 +15,6 @@ const updateDivision = z.object({
 });
 
 export const DivisionZodValidation = {
-    createDivision,
-    updateDivision
-} 
+  createDivision,
+  updateDivision,
+};
