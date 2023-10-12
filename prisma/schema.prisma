@@ -84,17 +84,19 @@ model Hotel {
   hotelType      HotelType
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+  Room           Room[]
 }
 
 model Room {
-  id           String   @id @default(uuid())
-  roomType     String
-  description  String?
-  roomImages   String[]
-  roomPrice    Int
-  checkInTime  String
-  checkOutTime String
-
+  id             String           @id @default(uuid())
+  roomType       String
+  description    String?
+  roomImages     String[]
+  roomPrice      Int
+  checkInTime    String
+  checkOutTime   String
+  hotelId        String
+  hotel          Hotel            @relation(fields: [hotelId], references: [id])
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   RoomFacilities RoomFacilities[]
