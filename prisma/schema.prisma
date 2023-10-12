@@ -11,18 +11,139 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
+  id         String    @id @default(uuid())
   firstName  String
   middleName String?
   lastName   String
-  role       UserRole @default(USER)
-  email      String   @unique
+  role       UserRole  @default(USER)
+  email      String    @unique
   password   String
   token      String?
+  Profile    Profile[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Profile {
+  userId       String
+  bio          String?
+  country      String?
+  division     String?
+  district     String?
+  area         String?
+  nid          String?
+  passport     String?
+  profileImage String?
+  dateOfBirth  String?
+  gender       Gender?
+  user         User    @relation(fields: [userId], references: [id])
+
+  @@id([userId])
+}
+
+model Division {
+  id        String     @id @default(uuid())
+  title     String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  District  District[]
+}
+
+model District {
+  id            String   @id @default(uuid())
+  title         String
+  divisionImage String
+  divisionId    String
+  division      Division @relation(fields: [divisionId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  Place         Place[]
+  Hotel         Hotel[]
+}
+
+model Place {
+  id          String   @id @default(uuid())
+  title       String
+  placeImage  String
+  description String
+  districtId  String
+  district    District @relation(fields: [districtId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Hotel {
+  id             String    @id @default(uuid())
+  title          String
+  hotelImage     String
+  description    String
+  districtId     String
+  location       String
+  mapLocationUrl String?
+  district       District  @relation(fields: [districtId], references: [id])
+  hotelType      HotelType
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Room {
+  id           String   @id @default(uuid())
+  roomType     String
+  description  String?
+  roomImages   String[]
+  roomPrice    Int
+  checkInTime  String
+  checkOutTime String
+
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  RoomFacilities RoomFacilities[]
+}
+
+model RoomFacilities {
+  roomId                  String
+  wifi                    Boolean @default(false)
+  free_parking            Boolean @default(false)
+  private_bathroom        Boolean @default(false)
+  shower                  Boolean @default(false)
+  swimming_pool           Boolean @default(false)
+  air_conditioning        Boolean @default(false)
+  television              Boolean @default(false)
+  mountain_View           Boolean @default(false)
+  garden                  Boolean @default(false)
+  free_breakfast          Boolean @default(false)
+  resturant               Boolean @default(false)
+  hot_Tub                 Boolean @default(false)
+  spa_and_wellness_center Boolean @default(false)
+  see_view                Boolean @default(false)
+  room_service            Boolean @default(false)
+  fitness_Center          Boolean @default(false)
+  beachFront              Boolean @default(false)
+  no_smoking_room         Boolean @default(false)
+
+  room Room @relation(fields: [roomId], references: [id])
+
+  @@id([roomId])
 }
 
 enum UserRole {
   SUPER_ADMIN
   ADMIN
   USER
+}
+
+enum Gender {
+  Male
+  Female
+  Other
+}
+
+enum HotelType {
+  Fivestar
+  Fourstar
+  Threestar
+  Twostar
+  Onestar
+  Resort
+  Vilas
 }

@@ -55,8 +55,16 @@ const signup = async (userData: User) => {
     userData.password,
     Number(config.bcrypt_salt_rounds)
   );
+
   const user = await prisma.user.create({
     data: userData,
+  });
+
+
+  await prisma.profile.create({
+    data: {
+      userId: user?.id,
+    },
   });
 
   const { id: userId, email: userEmail, role } = user;
