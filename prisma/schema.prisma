@@ -102,30 +102,21 @@ model Room {
   RoomFacilities RoomFacilities[]
 }
 
+model FacilitiesOptions {
+  id        String   @id @default(uuid())
+  title     String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model RoomFacilities {
-  roomId                  String
-  wifi                    Boolean @default(false)
-  free_parking            Boolean @default(false)
-  private_bathroom        Boolean @default(false)
-  shower                  Boolean @default(false)
-  swimming_pool           Boolean @default(false)
-  air_conditioning        Boolean @default(false)
-  television              Boolean @default(false)
-  mountain_View           Boolean @default(false)
-  garden                  Boolean @default(false)
-  free_breakfast          Boolean @default(false)
-  resturant               Boolean @default(false)
-  hot_Tub                 Boolean @default(false)
-  spa_and_wellness_center Boolean @default(false)
-  see_view                Boolean @default(false)
-  room_service            Boolean @default(false)
-  fitness_Center          Boolean @default(false)
-  beachFront              Boolean @default(false)
-  no_smoking_room         Boolean @default(false)
-
-  room Room @relation(fields: [roomId], references: [id])
-
-  @@id([roomId])
+  id                  String   @id @default(uuid())
+  roomId              String
+  FacilitiesOptionsId String
+  room                Room     @relation(fields: [roomId], references: [id])
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
 enum UserRole {
@@ -149,3 +140,22 @@ enum HotelType {
   Resort
   Vilas
 }
+
+// wifi                    Boolean @default(false)
+// free_parking            Boolean @default(false)
+// private_bathroom        Boolean @default(false)
+// shower                  Boolean @default(false)
+// swimming_pool           Boolean @default(false)
+// air_conditioning        Boolean @default(false)
+// television              Boolean @default(false)
+// mountain_View           Boolean @default(false)
+// garden                  Boolean @default(false)
+// free_breakfast          Boolean @default(false)
+// resturant               Boolean @default(false)
+// hot_Tub                 Boolean @default(false)
+// spa_and_wellness_center Boolean @default(false)
+// sea_view                Boolean @default(false)
+// room_service            Boolean @default(false)
+// fitness_Center          Boolean @default(false)
+// beachFront              Boolean @default(false)
+// no_smoking_room         Boolean @default(false)
