@@ -8,6 +8,10 @@ import { hotelSearchAbleField } from './hotel.constant';
 const createHotel = async (data: Hotel) => {
   const hotel = await prisma.hotel.create({
     data,
+    include: {
+      district: true,
+      Room: true
+    }
   });
 
   return hotel;
@@ -51,6 +55,10 @@ const getAllHotel = async (
     where: whereCondition,
     skip,
     take: limit,
+    include: {
+      district: true,
+      Room: true
+    },
     orderBy:
       options.sortBy && options.sortOrder
         ? { [options.sortBy]: options.sortOrder }
@@ -76,6 +84,10 @@ const getSingleHotel = async (id: string) => {
     where: {
       id,
     },
+    include: {
+      district: true,
+      Room: true,
+    }
   });
 
   return hotel;
@@ -87,6 +99,10 @@ const updateHotel = async (id: string, data: Partial<Hotel>) => {
       id,
     },
     data,
+    include: {
+      district: true,
+      Room: true,
+    },
   });
 
   return hotel;

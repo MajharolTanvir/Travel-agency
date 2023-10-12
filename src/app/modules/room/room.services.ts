@@ -8,6 +8,10 @@ import { roomSearchAbleField } from './room.constant';
 const createRoom = async (data: Room) => {
   const room = await prisma.room.create({
     data,
+    include: {
+      hotel: true,
+      RoomFacilities: true,
+    },
   });
 
   return room;
@@ -51,6 +55,10 @@ const getAllRoom = async (
     where: whereCondition,
     skip,
     take: limit,
+    include: {
+      hotel: true,
+      RoomFacilities: true,
+    },
     orderBy:
       options.sortBy && options.sortOrder
         ? { [options.sortBy]: options.sortOrder }
@@ -87,6 +95,10 @@ const updateRoom = async (id: string, data: Partial<Division>) => {
       id,
     },
     data,
+    include: {
+      hotel: true,
+      RoomFacilities: true,
+    },
   });
 
   return room;

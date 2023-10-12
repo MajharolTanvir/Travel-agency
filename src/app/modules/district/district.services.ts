@@ -8,6 +8,11 @@ import { districtSearchAbleField } from './district.constant';
 const createDistrict = async (data: District) => {
   const District = await prisma.district.create({
     data,
+    include: {
+      division: true,
+      Hotel: true,
+      Place: true,
+    },
   });
 
   return District;
@@ -51,6 +56,11 @@ const getAllDistrict = async (
     where: whereCondition,
     skip,
     take: limit,
+    include: {
+      division: true,
+      Hotel: true,
+      Place: true,
+    },
     orderBy:
       options.sortBy && options.sortOrder
         ? { [options.sortBy]: options.sortOrder }
@@ -76,6 +86,11 @@ const getSingleDistrict = async (id: string) => {
     where: {
       id,
     },
+    include: {
+      division: true,
+      Hotel: true,
+      Place: true,
+    },
   });
 
   return district;
@@ -87,6 +102,11 @@ const updateDistrict = async (id: string, data: Partial<District>) => {
       id,
     },
     data,
+    include: {
+      division: true,
+      Hotel: true,
+      Place: true,
+    },
   });
 
   return district;

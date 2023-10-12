@@ -7,6 +7,7 @@ import { PlaceRouter } from '../modules/place/place.router';
 import { HotelRouter } from '../modules/hotel/hotel.router';
 import { RoomRouter } from '../modules/room/room.router';
 import { FacultiesRouter } from '../modules/facilitiesOptions/facilitiesOptions.router';
+import { RoomFacilitiesRouter } from '../modules/roomFacilities/roomFacilities.router';
 
 const router = express.Router();
 
@@ -43,6 +44,10 @@ const moduleRoutes = [
     path: '/facilities',
     routes: FacultiesRouter,
   },
+  {
+    path: '/room-facilities',
+    routes: RoomFacilitiesRouter
+  }
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.routes));

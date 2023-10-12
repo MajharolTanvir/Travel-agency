@@ -7,7 +7,7 @@ import { IDivisionFilterType } from './division.interface';
 
 const createDivision = async (data: Division) => {
   const division = await prisma.division.create({
-    data,
+      data,
   });
 
   return division;

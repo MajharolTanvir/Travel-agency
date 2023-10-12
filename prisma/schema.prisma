@@ -33,6 +33,7 @@ model Profile {
   area         String?
   nid          String?
   passport     String?
+  contactNo    String?
   profileImage String?
   dateOfBirth  String?
   gender       Gender?
@@ -78,6 +79,7 @@ model Hotel {
   hotelImage     String
   description    String
   districtId     String
+  contactNo      String
   location       String
   mapLocationUrl String?
   district       District  @relation(fields: [districtId], references: [id])
@@ -103,20 +105,22 @@ model Room {
 }
 
 model FacilitiesOptions {
-  id        String   @id @default(uuid())
-  title     String
-  image     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String           @id @default(uuid())
+  title          String
+  image          String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  RoomFacilities RoomFacilities[]
 }
 
 model RoomFacilities {
-  id                  String   @id @default(uuid())
+  id                  String            @id @default(uuid())
   roomId              String
   FacilitiesOptionsId String
-  room                Room     @relation(fields: [roomId], references: [id])
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  room                Room              @relation(fields: [roomId], references: [id])
+  facilitiesOptions   FacilitiesOptions @relation(fields: [FacilitiesOptionsId], references: [id])
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
 }
 
 enum UserRole {
