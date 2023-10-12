@@ -2,6 +2,7 @@ import express from 'express';
 import { UsersRouter } from '../modules/users/users.router';
 import { ProfileRouter } from '../modules/profile/profile.router';
 import { DivisionRouter } from '../modules/division/division.router';
+import { DistrictRouter } from '../modules/district/district.router';
 
 const router = express.Router();
 
@@ -17,6 +18,10 @@ const moduleRoutes = [
   {
     path: '/division',
     routes: DivisionRouter
+  },
+  {
+    path: '/district',
+    routes: DistrictRouter
   },
 ];
 

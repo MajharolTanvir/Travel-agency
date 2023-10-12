@@ -26,7 +26,7 @@ const getAllDivision = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Division retrieved successfully',
+    message: 'Divisions retrieved successfully',
     data: result,
   });
 });
