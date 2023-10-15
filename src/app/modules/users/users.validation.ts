@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { roles } from './users.constant';
 
 
 const signupZodSchema = z.object({
@@ -15,9 +14,6 @@ const signupZodSchema = z.object({
     }),
     password: z.string({
       required_error: 'Password is required',
-    }),
-    role: z.enum([...roles] as [string, ...string[]], {
-      required_error: 'Role is required',
     }),
     token: z.string().optional(),
   }),

@@ -54,13 +54,27 @@ const getAllProfile = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Profile retrieved successfully',
+    meta: result.meta,
+    data: result.data,
+  });
+});
+
+const changeRole = catchAsync(async (req: Request, res: Response) => {
+  const result = await ProfileService.changeRole(req.params.id, req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Role updated successfully',
     data: result,
   });
 });
+
 
 export const ProfileController = {
   profileUpdate,
   getProfile,
   getSingleProfile,
   getAllProfile,
+  changeRole,
 };

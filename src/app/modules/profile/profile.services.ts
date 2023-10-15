@@ -1,19 +1,46 @@
-import { Prisma, Profile } from '@prisma/client';
-import { prisma } from '../../../shared/prisma';
-import { IPaginationOptions } from '../../../interfaces/pagination';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Prisma } from '@prisma/client';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
+import { IPaginationOptions } from '../../../interfaces/pagination';
+import { prisma } from '../../../shared/prisma';
 import { userSearchAbleField } from './profile.constant';
 import { IUserFilterType } from './profile.interface';
 
-const profileUpdate = async (id: string, data: Partial<Profile>) => {
-  const updateProfile = await prisma.profile.update({
+const changeRole = async (id: string, data: any) => {
+  await prisma.user.update({
     where: {
-      userId: id,
+      id,
     },
     data,
   });
+};
 
-  return updateProfile;
+const profileUpdate = async (id: string, userData: any) => {
+  const { firstName, middleName, lastName, ...data } = userData;
+  let result = null;
+  console.log(firstName, middleName, lastName);
+
+  if (data) {
+    result = await prisma.profile.update({
+      where: {
+        userId: id,
+      },
+      data,
+    });
+  }
+
+  result = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      firstName: firstName,
+      middleName: middleName,
+      lastName: lastName,
+    },
+  });
+
+  return result;
 };
 
 const getProfile = async (id: string) => {
@@ -41,6 +68,7 @@ const getSingleProfile = async (id: string) => {
 
   return profile;
 };
+
 
 const getAllProfile = async (
   filters: IUserFilterType,
@@ -106,4 +134,5 @@ export const ProfileService = {
   getProfile,
   getSingleProfile,
   getAllProfile,
+  changeRole,
 };

@@ -54,9 +54,25 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+
+const getAllAdmin = catchAsync(async (req: Request, res: Response) => {
+  const result = await UsersService.getAllAdmin();
+  console.log(result);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Admin retrieved successfully',
+    data: result,
+  });
+});
+
+
+
 export const UsersController = {
   signup,
   signin,
   forgetPassword,
   resetPassword,
+  getAllAdmin,
 };

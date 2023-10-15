@@ -1,14 +1,14 @@
 import express from 'express';
-import { UsersRouter } from '../modules/users/users.router';
-import { ProfileRouter } from '../modules/profile/profile.router';
-import { DivisionRouter } from '../modules/division/division.router';
-import { DistrictRouter } from '../modules/district/district.router';
-import { PlaceRouter } from '../modules/place/place.router';
-import { HotelRouter } from '../modules/hotel/hotel.router';
-import { RoomRouter } from '../modules/room/room.router';
-import { FacultiesRouter } from '../modules/facilitiesOptions/facilitiesOptions.router';
-import { RoomFacilitiesRouter } from '../modules/roomFacilities/roomFacilities.router';
 import { AddToCartRouter } from '../modules/addToCart/addToCart.router';
+import { DistrictRouter } from '../modules/district/district.router';
+import { DivisionRouter } from '../modules/division/division.router';
+import { FacultiesRouter } from '../modules/facilitiesOptions/facilitiesOptions.router';
+import { HotelRouter } from '../modules/hotel/hotel.router';
+import { PlaceRouter } from '../modules/place/place.router';
+import { ProfileRouter } from '../modules/profile/profile.router';
+import { RoomRouter } from '../modules/room/room.router';
+import { RoomFacilitiesRouter } from '../modules/roomFacilities/roomFacilities.router';
+import { UsersRouter } from '../modules/users/users.router';
 
 const router = express.Router();
 
