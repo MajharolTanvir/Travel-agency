@@ -27,7 +27,8 @@ const getAllRoom = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Rooms retrieved successfully',
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 

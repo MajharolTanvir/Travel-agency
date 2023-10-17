@@ -10,7 +10,7 @@ const router = express.Router();
 router.post(
   '/',
   validateRequest(HotelZodValidation.createHotel),
-  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   HotelsController.createHotel
 );
 
@@ -29,13 +29,13 @@ router.get(
 router.patch(
   '/:id',
   validateRequest(HotelZodValidation.updateHotel),
-  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   HotelsController.updateHotel
 );
 
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   HotelsController.deleteHotel
 );
 

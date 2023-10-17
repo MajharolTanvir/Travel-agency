@@ -2,10 +2,10 @@
 CREATE TYPE "UserRole" AS ENUM ('super_admin', 'admin', 'user');
 
 -- CreateEnum
-CREATE TYPE "Gender" AS ENUM ('Male', 'Female', 'Other');
+CREATE TYPE "HotelType" AS ENUM ('Fivestar', 'Fourstar', 'Threestar', 'Twostar', 'Onestar', 'Resort', 'Vilas');
 
 -- CreateEnum
-CREATE TYPE "HotelType" AS ENUM ('Fivestar', 'Fourstar', 'Threestar', 'Twostar', 'Onestar', 'Resort', 'Vilas');
+CREATE TYPE "RoomConfirmation" AS ENUM ('Panding', 'Confirmed', 'Canceled');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -36,7 +36,7 @@ CREATE TABLE "Profile" (
     "contactNo" TEXT,
     "profileImage" TEXT,
     "dateOfBirth" TEXT,
-    "gender" "Gender",
+    "gender" TEXT,
 
     CONSTRAINT "Profile_pkey" PRIMARY KEY ("userId")
 );
@@ -55,7 +55,7 @@ CREATE TABLE "Division" (
 CREATE TABLE "District" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "divisionImage" TEXT NOT NULL,
+    "districtImage" TEXT NOT NULL,
     "divisionId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE "Room" (
     "id" TEXT NOT NULL,
     "roomType" TEXT NOT NULL,
     "description" TEXT,
-    "roomImages" TEXT[],
+    "roomImages" JSONB[],
     "roomPrice" INTEGER NOT NULL,
     "checkInTime" TEXT NOT NULL,
     "checkOutTime" TEXT NOT NULL,
@@ -142,6 +142,21 @@ CREATE TABLE "AddToCartFields" (
     "packageId" TEXT NOT NULL,
 
     CONSTRAINT "AddToCartFields_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "BookedHotel" (
+    "id" TEXT NOT NULL,
+    "roomId" TEXT NOT NULL,
+    "checkingDate" TEXT NOT NULL,
+    "checkoutDate" TEXT NOT NULL,
+    "roomConfirmation" "RoomConfirmation" NOT NULL DEFAULT 'Panding',
+    "roomNo" TEXT,
+    "roomFloor" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "BookedHotel_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

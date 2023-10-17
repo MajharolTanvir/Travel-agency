@@ -9,6 +9,10 @@ import { ProfileRouter } from '../modules/profile/profile.router';
 import { RoomRouter } from '../modules/room/room.router';
 import { RoomFacilitiesRouter } from '../modules/roomFacilities/roomFacilities.router';
 import { UsersRouter } from '../modules/users/users.router';
+import { BookedHotelRouter } from '../modules/bookedHotel/bookedHotel.router';
+import { ReviewRouter } from '../modules/review/review.router';
+import { BlogRouter } from '../modules/blog/blog.router';
+import { FeedbackRouter } from '../modules/feedBackForm/feedBackForm.router';
 
 const router = express.Router();
 
@@ -34,11 +38,11 @@ const moduleRoutes = [
     routes: PlaceRouter,
   },
   {
-    path: '/hotel',
+    path: '/hotels',
     routes: HotelRouter,
   },
   {
-    path: '/room',
+    path: '/rooms',
     routes: RoomRouter,
   },
   {
@@ -47,12 +51,28 @@ const moduleRoutes = [
   },
   {
     path: '/room-facilities',
-    routes: RoomFacilitiesRouter
+    routes: RoomFacilitiesRouter,
   },
   {
     path: '/add-to-cart',
-    routes: AddToCartRouter
-  }
+    routes: AddToCartRouter,
+  },
+  {
+    path: '/booked-hotel',
+    routes: BookedHotelRouter,
+  },
+  {
+    path: '/review',
+    routes: ReviewRouter,
+  },
+  {
+    path: '/blog',
+    routes: BlogRouter,
+  },
+  {
+    path: '/feedback',
+    routes: FeedbackRouter,
+  },
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.routes));

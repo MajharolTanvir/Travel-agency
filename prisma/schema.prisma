@@ -11,17 +11,19 @@ datasource db {
 }
 
 model User {
-  id         String    @id @default(uuid())
-  firstName  String
-  middleName String?
-  lastName   String
-  role       UserRole  @default(user)
-  email      String    @unique
-  password   String
-  token      String?
-  Profile    Profile[]
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id          String        @id @default(uuid())
+  firstName   String
+  middleName  String?
+  lastName    String
+  role        UserRole      @default(user)
+  email       String        @unique
+  password    String
+  token       String?
+  Profile     Profile[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Reviews     Reviews[]
+  BookedHotel BookedHotel[]
 }
 
 model Profile {
@@ -94,7 +96,7 @@ model Room {
   id              String            @id @default(uuid())
   roomType        String
   description     String?
-  roomImages      String[]
+  roomImages      Json[]
   roomPrice       Int
   checkInTime     String
   checkOutTime    String
@@ -104,6 +106,8 @@ model Room {
   updatedAt       DateTime          @updatedAt
   RoomFacilities  RoomFacilities[]
   AddToCartFields AddToCartFields[]
+  BookedHotel     BookedHotel[]
+  Reviews         Reviews[]
 }
 
 model FacilitiesOptions {
@@ -137,6 +141,49 @@ model AddToCartFields {
   district          District @relation(fields: [districtId], references: [id])
 }
 
+model Reviews {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  roomId String
+  room   Room   @relation(fields: [roomId], references: [id])
+  rating String
+  text   String @default("")
+}
+
+model Blog {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  thumbnail   String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BookedHotel {
+  id               String           @id @default(uuid())
+  userId           String
+  roomId           String
+  checkingDate     String
+  checkoutDate     String
+  roomConfirmation RoomConfirmation @default(Panding)
+  roomNo           String?
+  roomFloor        String?
+  room             Room             @relation(fields: [roomId], references: [id])
+  user             User             @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FeedbackForm {
+  id          String   @id @default(uuid())
+  subject     String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 enum UserRole {
   super_admin
   admin
@@ -151,6 +198,12 @@ enum HotelType {
   Onestar
   Resort
   Vilas
+}
+
+enum RoomConfirmation {
+  Panding
+  Confirmed
+  Canceled
 }
 
 // wifi                    Boolean @default(false)

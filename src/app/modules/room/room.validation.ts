@@ -8,9 +8,13 @@ const createRoom = z.object({
     description: z.string({
       required_error: 'Description is required',
     }),
-    roomImage: z.string({
-      required_error: 'Room image is required',
-    }),
+    roomImages: z.array(
+      z.object({
+        url: z.string({
+          required_error: 'Room image is required',
+        }),
+      })
+    ),
     roomPrice: z.number({
       required_error: 'Price is required',
     }),

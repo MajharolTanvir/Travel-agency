@@ -37,14 +37,27 @@ const getAllRoom = async (
     });
   }
 
-  if (Object.keys(filterData).length > 0) {
+  if (Object.keys(filterData).length) {
     andConditions.push({
-      AND: Object.keys(filterData).map(key => ({
-        [key]: {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          equals: (filterData as any)[key],
-        },
-      })),
+      AND: Object.entries(filterData).map(([field, value]) => {
+        if (field === 'minPrice') {
+          return {
+            roomPrice: {
+              gte: parseFloat(value as string),
+            },
+          };
+        }
+        if (field === 'maxPrice') {
+          return {
+            roomPrice: {
+              lte: parseFloat(value as string),
+            },
+          };
+        }
+        return {
+          [field]: value,
+        };
+      }),
     });
   }
 
@@ -83,6 +96,10 @@ const getSingleRoom = async (id: string) => {
   const room = await prisma.room.findFirst({
     where: {
       id,
+    },
+    include: {
+      hotel: true,
+      RoomFacilities: true,
     },
   });
 
