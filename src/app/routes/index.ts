@@ -1,18 +1,18 @@
 import express from 'express';
 import { AddToCartRouter } from '../modules/addToCart/addToCart.router';
+import { BlogRouter } from '../modules/blog/blog.router';
+import { BookedHotelRouter } from '../modules/bookedHotel/bookedHotel.router';
 import { DistrictRouter } from '../modules/district/district.router';
 import { DivisionRouter } from '../modules/division/division.router';
 import { FacultiesRouter } from '../modules/facilitiesOptions/facilitiesOptions.router';
+import { FeedbackRouter } from '../modules/feedBackForm/feedBackForm.router';
 import { HotelRouter } from '../modules/hotel/hotel.router';
 import { PlaceRouter } from '../modules/place/place.router';
 import { ProfileRouter } from '../modules/profile/profile.router';
+import { ReviewRouter } from '../modules/review/review.router';
 import { RoomRouter } from '../modules/room/room.router';
 import { RoomFacilitiesRouter } from '../modules/roomFacilities/roomFacilities.router';
 import { UsersRouter } from '../modules/users/users.router';
-import { BookedHotelRouter } from '../modules/bookedHotel/bookedHotel.router';
-import { ReviewRouter } from '../modules/review/review.router';
-import { BlogRouter } from '../modules/blog/blog.router';
-import { FeedbackRouter } from '../modules/feedBackForm/feedBackForm.router';
 
 const router = express.Router();
 
