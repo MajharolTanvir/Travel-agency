@@ -26,18 +26,20 @@ const getSingleBlog = (id) => __awaiter(void 0, void 0, void 0, function* () {
         },
     });
 });
-const updateBlog = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
+const updateBlog = (id, userId, data) => __awaiter(void 0, void 0, void 0, function* () {
     return yield prisma_1.prisma.blog.update({
         where: {
             id,
+            userId: userId,
         },
         data,
     });
 });
-const deleteBlog = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteBlog = (id, userId) => __awaiter(void 0, void 0, void 0, function* () {
     return yield prisma_1.prisma.blog.delete({
         where: {
             id,
+            userId,
         },
     });
 });

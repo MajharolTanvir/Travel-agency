@@ -8,7 +8,7 @@ import { ReviewValidation } from './review.validation';
 const router = express.Router();
 
 router.post(
-  '/add-review',
+  '/',
   auth(ENUM_USER_ROLE.USER),
   validateRequest(ReviewValidation.addReview),
   ReviewController.addReview
@@ -26,13 +26,13 @@ router.get(
 
 
 router.patch(
-  '/update-review/:id',
+  '/:id',
   auth(ENUM_USER_ROLE.USER),
   ReviewController.updateReview
 );
 
 router.delete(
-  '/delete-review/:id',
+  '/:id',
   auth(ENUM_USER_ROLE.USER),
   ReviewController.deleteReview
 );

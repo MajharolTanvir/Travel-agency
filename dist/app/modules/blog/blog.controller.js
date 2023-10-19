@@ -46,7 +46,8 @@ const getSingleBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
 }));
 const updateBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield blog_services_1.BlogService.updateBlog(id, req.body);
+    const { userId } = req.user;
+    const result = yield blog_services_1.BlogService.updateBlog(id, userId, req.body);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
@@ -56,7 +57,8 @@ const updateBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
 }));
 const deleteBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield blog_services_1.BlogService.deleteBlog(id);
+    const { userId } = req.user;
+    const result = yield blog_services_1.BlogService.deleteBlog(id, userId);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
