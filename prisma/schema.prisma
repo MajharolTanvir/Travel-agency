@@ -164,8 +164,8 @@ model BookedHotel {
   id               String           @id @default(uuid())
   userId           String
   roomId           String
-  checkingDate     String
-  checkoutDate     String
+  checkInDate      String
+  checkOutDate     String
   roomConfirmation RoomConfirmation @default(Panding)
   roomNo           String?
   roomFloor        String?

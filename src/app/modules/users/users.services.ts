@@ -33,7 +33,7 @@ const sendResetPasswordWithMail = (
     html:
       '<div><h3 h3 > Dear honorable user ' +
       name +
-      ',</h3><p>Are you want to change your website password link? Please click on the following link to <a style="color: blue, font-weight: bold" href = "http://localhost:3000/authentication/reset-password/?token=' +
+      ',</h3><p>Are you want to change your website password link? Please click on the following link to <a style="color: blue, font-weight: bold" href = "http://localhost:3000/auth/reset-password/?token=' +
       token +
       '"> Reset your password </a> on Quick Tour Plan.</p></div>',
   };
