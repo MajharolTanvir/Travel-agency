@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Division, Prisma, Room } from '@prisma/client';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -5,9 +6,20 @@ import { prisma } from '../../../shared/prisma';
 import { IRoomFilterType } from './room.interface';
 import { roomSearchAbleField } from './room.constant';
 
+type JsonValue = any;
+
 const createRoom = async (data: Room) => {
   const room = await prisma.room.create({
-    data,
+    data: {
+      id: data.id,
+      roomType: data.roomType,
+      description: data.description,
+      roomImages: (data.roomImages || []) as JsonValue[],
+      roomPrice: data.roomPrice,
+      checkInTime: data.checkInTime,
+      checkOutTime: data.checkOutTime,
+      hotelId: data.hotelId,
+    },
     include: {
       hotel: true,
       RoomFacilities: true,
