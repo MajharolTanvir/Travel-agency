@@ -16,8 +16,17 @@ const createFeedback = (data) => __awaiter(void 0, void 0, void 0, function* () 
         data,
     });
 });
-const getAllFeedback = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield prisma_1.prisma.feedbackForm.findMany({});
+const getAllFeedback = (id, role) => __awaiter(void 0, void 0, void 0, function* () {
+    if (role === 'user') {
+        return yield prisma_1.prisma.feedbackForm.findMany({
+            where: {
+                userId: id,
+            },
+        });
+    }
+    else {
+        return yield prisma_1.prisma.feedbackForm.findMany({});
+    }
 });
 const getSingleFeedback = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return yield prisma_1.prisma.feedbackForm.findUnique({
@@ -26,18 +35,20 @@ const getSingleFeedback = (id) => __awaiter(void 0, void 0, void 0, function* ()
         },
     });
 });
-const updateFeedback = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
+const updateFeedback = (id, userId, data) => __awaiter(void 0, void 0, void 0, function* () {
     return yield prisma_1.prisma.feedbackForm.update({
         where: {
             id,
+            userId: userId,
         },
         data,
     });
 });
-const deleteFeedback = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteFeedback = (id, userId) => __awaiter(void 0, void 0, void 0, function* () {
     return yield prisma_1.prisma.feedbackForm.delete({
         where: {
             id,
+            userId: userId,
         },
     });
 });

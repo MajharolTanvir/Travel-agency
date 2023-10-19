@@ -27,7 +27,8 @@ const createFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
     });
 }));
 const getAllFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield feedBackForm_services_1.FeedbackFormService.getAllFeedback();
+    const user = req.user;
+    const result = yield feedBackForm_services_1.FeedbackFormService.getAllFeedback(user === null || user === void 0 ? void 0 : user.id, user === null || user === void 0 ? void 0 : user.role);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
@@ -36,7 +37,7 @@ const getAllFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
     });
 }));
 const getSingleFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield feedBackForm_services_1.FeedbackFormService.getSingleFeedback(req.body);
+    const result = yield feedBackForm_services_1.FeedbackFormService.getSingleFeedback(req.params.id);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
@@ -46,7 +47,8 @@ const getSingleFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void
 }));
 const updateFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield feedBackForm_services_1.FeedbackFormService.updateFeedback(id, req.body);
+    const { userId } = req.user;
+    const result = yield feedBackForm_services_1.FeedbackFormService.updateFeedback(id, userId, req.body);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,
@@ -56,7 +58,8 @@ const updateFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
 }));
 const deleteFeedback = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield feedBackForm_services_1.FeedbackFormService.deleteFeedback(id);
+    const { userId } = req.user;
+    const result = yield feedBackForm_services_1.FeedbackFormService.deleteFeedback(id, userId);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,

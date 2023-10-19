@@ -19,19 +19,21 @@ const getSingleBlog = async (id: string) => {
   });
 };
 
-const updateBlog = async (id: string, data: Partial<Blog>) => {
+const updateBlog = async (id: string, userId: string, data: Partial<Blog>) => {
   return await prisma.blog.update({
     where: {
       id,
+      userId: userId,
     },
     data,
   });
 };
 
-const deleteBlog = async (id: string) => {
+const deleteBlog = async (id: string, userId: string) => {
   return await prisma.blog.delete({
     where: {
       id,
+      userId,
     },
   });
 };

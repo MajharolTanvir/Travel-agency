@@ -9,19 +9,19 @@ router.get('/:id', FeedbackController.getSingleFeedback);
 router.get('/', FeedbackController.getAllFeedback);
 
 router.post(
-  '/create-blog',
+  '/',
   auth(ENUM_USER_ROLE.USER),
   FeedbackController.createFeedback
 );
 
 router.patch(
-  '/update-blog',
+  '/:id',
   auth(ENUM_USER_ROLE.USER),
   FeedbackController.updateFeedback
 );
 
 router.delete(
-  '/delete-blog',
+  '/:id',
   auth(ENUM_USER_ROLE.USER),
   FeedbackController.deleteFeedback
 );

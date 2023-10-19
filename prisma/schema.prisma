@@ -154,6 +154,7 @@ model Reviews {
 model Blog {
   id          String   @id @default(uuid())
   title       String
+  userId      String
   description String
   thumbnail   String[]
   createdAt   DateTime @default(now())
@@ -178,6 +179,7 @@ model BookedHotel {
 
 model FeedbackForm {
   id          String   @id @default(uuid())
+  userId      String
   subject     String
   description String
   createdAt   DateTime @default(now())

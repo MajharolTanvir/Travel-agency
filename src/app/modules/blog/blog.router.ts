@@ -9,19 +9,19 @@ router.get('/:id', BlogController.getSingleBlog);
 router.get('/', BlogController.getAllBlog);
 
 router.post(
-  '/create-blog',
+  '/',
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   BlogController.createBlog
 );
 
 router.patch(
-  '/update-blog',
+  '/:id',
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   BlogController.updateBlog
 );
 
 router.delete(
-  '/delete-blog',
+  '/:id',
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   BlogController.deleteBlog
 );
