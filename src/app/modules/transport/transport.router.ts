@@ -2,39 +2,33 @@ import express from 'express';
 import { ENUM_USER_ROLE } from '../../../enums/user';
 import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
-import { HotelZodValidation } from './hotel.validation';
-import { HotelsController } from './hotel.controller';
+import { TransportsController } from './transport.controller';
+import { TransportZodValidation } from './transport.validation';
 
 const router = express.Router();
 
 router.post(
   '/',
-  validateRequest(HotelZodValidation.createHotel),
+  validateRequest(TransportZodValidation.createTransport),
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
-  HotelsController.createHotel
+  TransportsController.createTransport
 );
 
-router.get(
-  '/',
-  HotelsController.getAllHotel
-);
+router.get('/', TransportsController.getAllTransport);
 
-router.get(
-  '/:id',
-  HotelsController.getSingleHotel
-);
+router.get('/:id', TransportsController.getSingleTransport);
 
 router.patch(
   '/:id',
-  validateRequest(HotelZodValidation.updateHotel),
+  validateRequest(TransportZodValidation.updateTransport),
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
-  HotelsController.updateHotel
+  TransportsController.updateTransport
 );
 
 router.delete(
   '/:id',
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
-  HotelsController.deleteHotel
+  TransportsController.deleteTransport
 );
 
 export const HotelRouter = router;

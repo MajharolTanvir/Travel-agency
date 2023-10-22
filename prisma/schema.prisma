@@ -11,19 +11,23 @@ datasource db {
 }
 
 model User {
-  id          String        @id @default(uuid())
-  firstName   String
-  middleName  String?
-  lastName    String
-  role        UserRole      @default(user)
-  email       String        @unique
-  password    String
-  token       String?
-  Profile     Profile[]
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Reviews     Reviews[]
-  BookedHotel BookedHotel[]
+  id           String        @id @default(uuid())
+  firstName    String
+  middleName   String?
+  lastName     String
+  role         UserRole      @default(traveler)
+  email        String        @unique
+  password     String
+  token        String?
+  confirmdCode String?
+  Profile      Profile[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  Reviews      Reviews[]
+  BookedHotel  BookedHotel[]
+  PackagePlan  PackagePlan[]
+
+  @@map("users")
 }
 
 model Profile {
@@ -42,6 +46,7 @@ model Profile {
   user         User    @relation(fields: [userId], references: [id])
 
   @@id([userId])
+  @@map("profiles")
 }
 
 model Division {
@@ -50,34 +55,41 @@ model Division {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   District  District[]
+
+  @@map("division")
 }
 
 model District {
-  id              String            @id @default(uuid())
-  title           String
-  districtImage   String
-  divisionId      String
-  division        Division          @relation(fields: [divisionId], references: [id])
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  Place           Place[]
-  Hotel           Hotel[]
-  AddToCartFields AddToCartFields[]
+  id            String      @id @default(uuid())
+  title         String
+  districtImage String
+  divisionId    String
+  division      Division    @relation(fields: [divisionId], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Place         Place[]
+  Hotel         Hotel[]
+  Transport     Transport[]
+
+  @@map("district")
 }
 
 model Place {
-  id          String   @id @default(uuid())
-  title       String
-  placeImage  String
-  description String
-  districtId  String
-  district    District @relation(fields: [districtId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String          @id @default(uuid())
+  title         String
+  placeImage    String
+  description   String
+  districtId    String
+  district      District        @relation(fields: [districtId], references: [id])
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  PackagePlaces PackagePlaces[]
+
+  @@map("places")
 }
 
 model Hotel {
-  id             String    @id @default(uuid())
+  id             String        @id @default(uuid())
   title          String
   hotelImage     String
   description    String
@@ -85,29 +97,33 @@ model Hotel {
   contactNo      String
   location       String
   mapLocationUrl String?
-  district       District  @relation(fields: [districtId], references: [id])
+  district       District      @relation(fields: [districtId], references: [id])
   hotelType      HotelType
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
   Room           Room[]
+  PackagePlan    PackagePlan[]
+
+  @@map("hotels")
 }
 
 model Room {
-  id              String            @id @default(uuid())
-  roomType        String
-  description     String?
-  roomImages      Json[]
-  roomPrice       Int
-  checkInTime     String
-  checkOutTime    String
-  hotelId         String
-  hotel           Hotel             @relation(fields: [hotelId], references: [id])
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  RoomFacilities  RoomFacilities[]
-  AddToCartFields AddToCartFields[]
-  BookedHotel     BookedHotel[]
-  Reviews         Reviews[]
+  id             String           @id @default(uuid())
+  roomType       String
+  description    String?
+  roomImages     Json[]
+  roomPrice      Int
+  checkInTime    String
+  checkOutTime   String
+  hotelId        String
+  hotel          Hotel            @relation(fields: [hotelId], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  RoomFacilities RoomFacilities[]
+  BookedHotel    BookedHotel[]
+  Reviews        Reviews[]
+
+  @@map("rooms")
 }
 
 model FacilitiesOptions {
@@ -117,6 +133,8 @@ model FacilitiesOptions {
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   RoomFacilities RoomFacilities[]
+
+  @@map("facilitiesOptions")
 }
 
 model RoomFacilities {
@@ -127,28 +145,103 @@ model RoomFacilities {
   facilitiesOptions   FacilitiesOptions @relation(fields: [FacilitiesOptionsId], references: [id])
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @updatedAt
+
+  @@map("roomFacilities")
 }
 
-model AddToCartFields {
-  id                String   @id @default(uuid())
-  roomId            String
-  districtId        String
-  byRoadTransportId String
-  byBoatTransportId String
-  byAirTransportId  String
-  packageId         String
-  room              Room     @relation(fields: [roomId], references: [id])
-  district          District @relation(fields: [districtId], references: [id])
+model Transport {
+  id              String        @id @default(uuid())
+  transportName   String
+  transportType   TransportType
+  transportImages String
+  transportPrice  Int
+  driverContactNo String
+  passengerSize   String
+  districtId      String
+  district        District      @relation(fields: [districtId], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  Reviews         Reviews[]
+
+  @@map("transports")
+}
+
+model BookedTransport {
+  id                      String       @id @default(uuid())
+  userId                  String
+  transportId             String
+  reservationStartDate    String
+  reservationEndDate      String
+  reservationConfirmation Confirmation @default(Panding)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("booked_transports")
+}
+
+model PackagePlan {
+  id              String          @id @default(uuid())
+  packageName     String
+  thumbnail       String
+  description     String
+  hotelId         String
+  guideId         String
+  travlerSize     Int
+  bookedTraveller Int
+  startDate       String
+  endDate         String
+  StartLocation   String
+  endLocation     String
+  contactManager  String
+  planStatus      Confirmation    @default(Panding)
+  hotel           Hotel           @relation(fields: [hotelId], references: [id])
+  guide           User            @relation(fields: [guideId], references: [id])
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  Reviews         Reviews[]
+  PackagePlaces   PackagePlaces[]
+
+  @@map("package_plans")
+}
+
+model PackagePlaces {
+  id          String      @id @default(uuid())
+  packageId   String
+  placeId     String
+  packagePlan PackagePlan @relation(fields: [packageId], references: [id])
+  place       Place       @relation(fields: [placeId], references: [id])
+
+  @@map("package_places")
+}
+
+model BookedPackage {
+  id                 String @id @default(uuid())
+  userId             String
+  travelingMember    String
+  contactNo          String
+  emergencyContactNo String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("booked_package")
 }
 
 model Reviews {
-  id     String @id @default(uuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-  roomId String
-  room   Room   @relation(fields: [roomId], references: [id])
-  rating String
-  text   String @default("")
+  id          String      @id @default(uuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  serviceId   String
+  room        Room        @relation(fields: [serviceId], references: [id], map: "room_reviews_fkey")
+  transport   Transport   @relation(fields: [serviceId], references: [id], map: "transport_reviews_fkey")
+  packagePlan PackagePlan @relation(fields: [serviceId], references: [id], map: "packagePlan_reviews_fkey")
+  rating      String
+  text        String      @default("")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("reviews")
 }
 
 model Blog {
@@ -159,22 +252,26 @@ model Blog {
   thumbnail   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@map("blogs")
 }
 
 model BookedHotel {
-  id               String           @id @default(uuid())
+  id               String       @id @default(uuid())
   userId           String
   roomId           String
   checkInDate      String
   checkOutDate     String
-  roomConfirmation RoomConfirmation @default(Panding)
+  roomConfirmation Confirmation @default(Panding)
   roomNo           String?
   roomFloor        String?
-  room             Room             @relation(fields: [roomId], references: [id])
-  user             User             @relation(fields: [userId], references: [id])
+  room             Room         @relation(fields: [roomId], references: [id])
+  user             User         @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("booked_hotel")
 }
 
 model FeedbackForm {
@@ -184,28 +281,39 @@ model FeedbackForm {
   description String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@map("feedback_form")
 }
 
 enum UserRole {
   super_admin
-  admin
-  user
+  head_manager
+  district_coordinator
+  guide
+  traveler
 }
 
 enum HotelType {
-  Fivestar
-  Fourstar
-  Threestar
-  Twostar
-  Onestar
+  Five_star
+  Four_star
+  Three_star
+  Two_star
+  One_star
+  Cottage
   Resort
   Vilas
 }
 
-enum RoomConfirmation {
+enum Confirmation {
   Panding
   Confirmed
   Canceled
+  Completed
+}
+
+enum TransportType {
+  ByRoad
+  ByBoat
 }
 
 // wifi                    Boolean @default(false)

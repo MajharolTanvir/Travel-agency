@@ -10,19 +10,19 @@ router.get('/', FeedbackController.getAllFeedback);
 
 router.post(
   '/',
-  auth(ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.TRAVELER),
   FeedbackController.createFeedback
 );
 
 router.patch(
   '/:id',
-  auth(ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.TRAVELER),
   FeedbackController.updateFeedback
 );
 
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.TRAVELER),
   FeedbackController.deleteFeedback
 );
 

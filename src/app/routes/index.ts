@@ -1,5 +1,4 @@
 import express from 'express';
-import { AddToCartRouter } from '../modules/addToCart/addToCart.router';
 import { BlogRouter } from '../modules/blog/blog.router';
 import { BookedHotelRouter } from '../modules/bookedHotel/bookedHotel.router';
 import { DistrictRouter } from '../modules/district/district.router';
@@ -54,10 +53,6 @@ const moduleRoutes = [
     routes: RoomFacilitiesRouter,
   },
   {
-    path: '/add-to-cart',
-    routes: AddToCartRouter,
-  },
-  {
     path: '/booked-hotel',
     routes: BookedHotelRouter,
   },
@@ -74,6 +69,7 @@ const moduleRoutes = [
     routes: FeedbackRouter,
   },
 ];
+
 
 moduleRoutes.forEach(route => router.use(route.path, route.routes));
 export default router;

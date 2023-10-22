@@ -7,20 +7,24 @@ const router = express.Router();
 
 router.post(
   '/',
-//   validateRequest(PlaceZodValidation.createPlace),
-  auth(ENUM_USER_ROLE.USER),
+  //   validateRequest(PlaceZodValidation.createPlace),
+  auth(ENUM_USER_ROLE.TRAVELER),
   BookedHotelController.createBookedHotel
 );
 
 router.get(
   '/',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER, ENUM_USER_ROLE.TRAVELER),
   BookedHotelController.getBookedHotel
 );
 
 router.get(
   '/:id',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.USER),
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.HEAD_MANAGER,
+    ENUM_USER_ROLE.TRAVELER
+  ),
   BookedHotelController.singleBookedHotel
 );
 
@@ -29,15 +33,15 @@ router.patch(
   //   validateRequest(PlaceZodValidation.updatePlace),
   auth(
     ENUM_USER_ROLE.SUPER_ADMIN,
-    ENUM_USER_ROLE.USER,
-    ENUM_USER_ROLE.ADMIN
+    ENUM_USER_ROLE.TRAVELER,
+    ENUM_USER_ROLE.HEAD_MANAGER
   ),
   BookedHotelController.updateBookedHotel
 );
 
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.TRAVELER),
   BookedHotelController.deleteBookedHotel
 );
 

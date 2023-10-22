@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Blog" ALTER COLUMN "thumbnail" SET NOT NULL,
-ALTER COLUMN "thumbnail" SET DATA TYPE TEXT;
