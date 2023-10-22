@@ -13,6 +13,12 @@ router.post(
   PackagePlanController.createPackage
 );
 
+router.post(
+  '/package-places',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  PackagePlanController.createPackagePlaces
+);
+
 router.get('/', PackagePlanController.getAllPackage);
 
 router.get('/:id', PackagePlanController.getSinglePackage);
@@ -22,6 +28,12 @@ router.patch(
   validateRequest(PackagePlanValidation.updatePackagePlan),
   auth(ENUM_USER_ROLE.SUPER_ADMIN),
   PackagePlanController.updatePackage
+);
+
+router.patch(
+  '/:id/package-places',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  PackagePlanController.updatePackagePlaces
 );
 
 router.delete(

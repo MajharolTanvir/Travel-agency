@@ -69,10 +69,37 @@ const deletePackage = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const createPackagePlaces = catchAsync(async (req: Request, res: Response) => {
+  const result = await PackagePlanServices.createPackagePlaces(req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Package places selected successfully!',
+    data: result,
+  });
+});
+
+const updatePackagePlaces = catchAsync(async (req: Request, res: Response) => {
+  const result = await PackagePlanServices.updatePackagePlaces(
+    req.params.id,
+    req.body
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Package updated successfully!',
+    data: result,
+  });
+});
+
 export const PackagePlanController = {
   createPackage,
   getAllPackage,
   getSinglePackage,
   updatePackage,
   deletePackage,
+  createPackagePlaces,
+  updatePackagePlaces,
 };

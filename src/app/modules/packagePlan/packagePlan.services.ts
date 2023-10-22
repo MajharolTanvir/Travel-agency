@@ -1,4 +1,4 @@
-import { PackagePlan, Prisma } from '@prisma/client';
+import { PackagePlaces, PackagePlan, Prisma } from '@prisma/client';
 import { prisma } from '../../../shared/prisma';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { IPackageFilterType } from './packagePlan.interface';
@@ -126,10 +126,31 @@ const deletePackage = async (id: string) => {
   return result;
 };
 
+const createPackagePlaces = async (data: PackagePlaces) => {
+  const result = await prisma.packagePlaces.createMany({
+    data,
+  });
+
+  return result;
+};
+
+const updatePackagePlaces = async (id: string, data: PackagePlaces) => {
+  const result = await prisma.packagePlaces.update({
+    where: {
+      id
+    },
+    data,
+  });
+
+  return result;
+};
+
 export const PackagePlanServices = {
   createPackage,
   getAllPackage,
   getSinglePackage,
   updatePackage,
   deletePackage,
-};
+  createPackagePlaces,
+  updatePackagePlaces
+}
