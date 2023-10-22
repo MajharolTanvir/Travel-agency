@@ -169,26 +169,26 @@ model Transport {
 }
 
 model PackagePlan {
-  id              String          @id @default(uuid())
-  packageName     String
-  thumbnail       String
-  description     String
-  hotelId         String
-  guideId         String
-  travlerSize     Int
-  bookedTraveller Int
-  startDate       String
-  endDate         String
-  StartLocation   String
-  endLocation     String
-  contactManager  String
-  planStatus      Confirmation    @default(Panding)
-  hotel           Hotel           @relation(fields: [hotelId], references: [id])
-  guide           User            @relation(fields: [guideId], references: [id])
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  Reviews         Reviews[]
-  PackagePlaces   PackagePlaces[]
+  id             String          @id @default(uuid())
+  packageName    String
+  thumbnail      String
+  description    String
+  hotelId        String?
+  guideId        String
+  travelerSize   Int
+  bookedTraveler Int
+  startDate      String
+  endDate        String
+  startLocation  String
+  endLocation    String
+  contactManager String
+  planStatus     Confirmation    @default(Panding)
+  hotel          Hotel?          @relation(fields: [hotelId], references: [id])
+  guide          User            @relation(fields: [guideId], references: [id])
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  Reviews        Reviews[]
+  PackagePlaces  PackagePlaces[]
 
   @@map("package_plans")
 }
