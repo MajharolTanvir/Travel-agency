@@ -66,13 +66,35 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getAllAdmin = catchAsync(async (req: Request, res: Response) => {
+const getAllHeadManager = catchAsync(async (req: Request, res: Response) => {
   const result = await UsersService.getAllHeadManager();
   console.log(result);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Admin retrieved successfully',
+    message: 'Head manager retrieved successfully',
+    data: result,
+  });
+});
+
+const getAllCoOrdinator = catchAsync(async (req: Request, res: Response) => {
+  const result = await UsersService.getAllCoOrdinator();
+  console.log(result);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Coordinators retrieved successfully',
+    data: result,
+  });
+});
+
+const getAllGuide = catchAsync(async (req: Request, res: Response) => {
+  const result = await UsersService.getAllGuide();
+  console.log(result);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Guides retrieved successfully',
     data: result,
   });
 });
@@ -83,5 +105,7 @@ export const UsersController = {
   signIn,
   forgetPassword,
   resetPassword,
-  getAllAdmin,
+  getAllHeadManager,
+  getAllCoOrdinator,
+  getAllGuide,
 };

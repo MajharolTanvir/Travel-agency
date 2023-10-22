@@ -231,6 +231,31 @@ const getAllHeadManager = async () => {
   return adminsProfile;
 };
 
+const getAllCoOrdinator = async () => {
+  const coOrdinatorProfile = await prisma.user.findMany({
+    where: {
+      role: 'district_coordinator',
+    },
+    include: {
+      Profile: true,
+    },
+  });
+  return coOrdinatorProfile;
+};
+
+const getAllGuide = async () => {
+  const guideProfile = await prisma.user.findMany({
+    where: {
+      role: 'guide',
+    },
+    include: {
+      Profile: true,
+    },
+  });
+  return guideProfile;
+};
+
+
 export const UsersService = {
   signup,
   confirmedSignup,
@@ -238,4 +263,6 @@ export const UsersService = {
   forgetPassword,
   resetPassword,
   getAllHeadManager,
+  getAllCoOrdinator,
+  getAllGuide,
 };

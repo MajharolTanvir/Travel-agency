@@ -30,7 +30,19 @@ router.post('/reset-password', UsersController.resetPassword);
 router.get(
   '/admins',
   auth(ENUM_USER_ROLE.SUPER_ADMIN),
-  UsersController.getAllAdmin
+  UsersController.getAllHeadManager
+);
+
+router.get(
+  '/coordinator',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  UsersController.getAllHeadManager
+);
+
+router.get(
+  '/guide',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  UsersController.getAllHeadManager
 );
 
 export const UsersRouter = router;

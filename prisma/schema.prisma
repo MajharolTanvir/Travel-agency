@@ -163,22 +163,9 @@ model Transport {
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   Reviews         Reviews[]
+  BookedHotel     BookedHotel[]
 
   @@map("transports")
-}
-
-model BookedTransport {
-  id                      String       @id @default(uuid())
-  userId                  String
-  transportId             String
-  reservationStartDate    String
-  reservationEndDate      String
-  reservationConfirmation Confirmation @default(Panding)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("booked_transports")
 }
 
 model PackagePlan {
@@ -258,16 +245,20 @@ model Blog {
 }
 
 model BookedHotel {
-  id               String       @id @default(uuid())
-  userId           String
-  roomId           String
-  checkInDate      String
-  checkOutDate     String
-  roomConfirmation Confirmation @default(Panding)
-  roomNo           String?
-  roomFloor        String?
-  room             Room         @relation(fields: [roomId], references: [id])
-  user             User         @relation(fields: [userId], references: [id])
+  id                            String       @id @default(uuid())
+  userId                        String
+  roomId                        String
+  roomCheckInDate               String
+  roomCheckOutDate              String
+  transportId                   String
+  transportReservationStartDate String
+  transportReservationEndDate   String
+  roomConfirmation              Confirmation @default(Panding)
+  roomNo                        String?
+  roomFloor                     String?
+  room                          Room         @relation(fields: [roomId], references: [id])
+  user                          User         @relation(fields: [userId], references: [id])
+  transport                     Transport    @relation(fields: [transportId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
