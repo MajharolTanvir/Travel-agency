@@ -31,4 +31,4 @@ router.delete(
   TransportsController.deleteTransport
 );
 
-export const HotelRouter = router;
+export const TransportRouter = router;

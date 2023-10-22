@@ -11,23 +11,23 @@ datasource db {
 }
 
 model User {
-  id            String          @id @default(uuid())
-  firstName     String
-  middleName    String?
-  lastName      String
-  role          UserRole        @default(traveler)
-  email         String          @unique
-  password      String
-  token         String?
-  validation    Boolean         @default(false)
-  confirmedCode Int?
-  Profile       Profile[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  Reviews       Reviews[]
-  BookedHotel   BookedHotel[]
-  PackagePlan   PackagePlan[]
-  BookedPackage BookedPackage[]
+  id             String           @id @default(uuid())
+  firstName      String
+  middleName     String?
+  lastName       String
+  role           UserRole         @default(traveler)
+  email          String           @unique
+  password       String
+  token          String?
+  validation     Boolean          @default(false)
+  confirmedCode  Int?
+  Profile        Profile[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Reviews        Reviews[]
+  PackagePlan    PackagePlan[]
+  BookedPackage  BookedPackage[]
+  BookedCustomly BookedCustomly[]
 
   @@map("users")
 }
@@ -122,8 +122,8 @@ model Room {
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   RoomFacilities RoomFacilities[]
-  BookedHotel    BookedHotel[]
   Reviews        Reviews[]
+  BookedCustomly BookedCustomly[]
 
   @@map("rooms")
 }
@@ -152,7 +152,7 @@ model RoomFacilities {
 }
 
 model Transport {
-  id              String        @id @default(uuid())
+  id              String            @id @default(uuid())
   transportName   String
   transportType   TransportType
   transportImages String
@@ -160,11 +160,11 @@ model Transport {
   driverContactNo String
   passengerSize   String
   districtId      String
-  district        District      @relation(fields: [districtId], references: [id])
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  district        District          @relation(fields: [districtId], references: [id])
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
   Reviews         Reviews[]
-  BookedHotel     BookedHotel[]
+  TransportBooked TransportBooked[]
 
   @@map("transports")
 }
@@ -249,13 +249,12 @@ model Blog {
   @@map("blogs")
 }
 
-model BookedHotel {
+model BookedCustomly {
   id                            String       @id @default(uuid())
   userId                        String
   roomId                        String
   roomCheckInDate               String
   roomCheckOutDate              String
-  transportId                   String
   transportReservationStartDate String
   transportReservationEndDate   String
   roomConfirmation              Confirmation @default(Panding)
@@ -263,12 +262,22 @@ model BookedHotel {
   roomFloor                     String?
   room                          Room         @relation(fields: [roomId], references: [id])
   user                          User         @relation(fields: [userId], references: [id])
-  transport                     Transport    @relation(fields: [transportId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  TransportBooked TransportBooked[]
 
   @@map("booked_hotel")
+}
+
+model TransportBooked {
+  bookedId        String
+  transportId     String
+  transport       Transport      @relation(fields: [transportId], references: [id])
+  bookedPackageId String
+  bookedPackage   BookedCustomly @relation(fields: [bookedPackageId], references: [id])
+
+  @@id([bookedId])
 }
 
 model FeedbackForm {

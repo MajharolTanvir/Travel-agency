@@ -42,4 +42,4 @@ router.delete(
   PackagePlanController.deletePackage
 );
 
-export const PlaceRouter = router;
+export const PackagePlanRouter = router;

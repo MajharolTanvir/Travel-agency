@@ -1,6 +1,5 @@
 import express from 'express';
 import { BlogRouter } from '../modules/blog/blog.router';
-import { BookedHotelRouter } from '../modules/bookedHotel/bookedHotel.router';
 import { DistrictRouter } from '../modules/district/district.router';
 import { DivisionRouter } from '../modules/division/division.router';
 import { FacultiesRouter } from '../modules/facilitiesOptions/facilitiesOptions.router';
@@ -12,6 +11,10 @@ import { ReviewRouter } from '../modules/review/review.router';
 import { RoomRouter } from '../modules/room/room.router';
 import { RoomFacilitiesRouter } from '../modules/roomFacilities/roomFacilities.router';
 import { UsersRouter } from '../modules/users/users.router';
+import { CustomBookedRouter } from '../modules/bookedCustomly/bookedCustomly.router';
+import { BookedPackageRouter } from '../modules/bookedPackage/bookedHotel.router';
+import { TransportRouter } from '../modules/transport/transport.router';
+import { PackagePlanRouter } from '../modules/packagePlan/packagePlan.router';
 
 const router = express.Router();
 
@@ -53,8 +56,12 @@ const moduleRoutes = [
     routes: RoomFacilitiesRouter,
   },
   {
-    path: '/booked-hotel',
-    routes: BookedHotelRouter,
+    path: '/booked-package',
+    routes: CustomBookedRouter,
+  },
+  {
+    path: '/custom-booked',
+    routes: BookedPackageRouter,
   },
   {
     path: '/review',
@@ -67,6 +74,14 @@ const moduleRoutes = [
   {
     path: '/feedback',
     routes: FeedbackRouter,
+  },
+  {
+    path: '/transport',
+    routes: TransportRouter,
+  },
+  {
+    path: '/package-plan',
+    routes: PackagePlanRouter,
   },
 ];
 

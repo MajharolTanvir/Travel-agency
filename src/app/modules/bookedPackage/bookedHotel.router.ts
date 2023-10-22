@@ -49,4 +49,4 @@ router.delete(
   BookedPackageController.deleteBookedPackage
 );
 
-export const BookedHotelRouter = router;
+export const BookedPackageRouter = router;

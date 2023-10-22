@@ -1,7 +1,7 @@
 import express from 'express';
 import { ENUM_USER_ROLE } from '../../../enums/user';
 import auth from '../../middlewares/auth';
-import { BookedHotelController } from './bookedHotel.controller';
+import { CustomBookingController } from './bookedCustomly.controller';
 
 const router = express.Router();
 
@@ -9,13 +9,17 @@ router.post(
   '/',
   //   validateRequest(PlaceZodValidation.createPlace),
   auth(ENUM_USER_ROLE.TRAVELER),
-  BookedHotelController.createBookedHotel
+  CustomBookingController.createBooked
 );
 
 router.get(
   '/',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER, ENUM_USER_ROLE.TRAVELER),
-  BookedHotelController.getBookedHotel
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.HEAD_MANAGER,
+    ENUM_USER_ROLE.TRAVELER
+  ),
+  CustomBookingController.getBooked
 );
 
 router.get(
@@ -25,7 +29,7 @@ router.get(
     ENUM_USER_ROLE.HEAD_MANAGER,
     ENUM_USER_ROLE.TRAVELER
   ),
-  BookedHotelController.singleBookedHotel
+  CustomBookingController.singleBooked
 );
 
 router.patch(
@@ -36,13 +40,13 @@ router.patch(
     ENUM_USER_ROLE.TRAVELER,
     ENUM_USER_ROLE.HEAD_MANAGER
   ),
-  BookedHotelController.updateBookedHotel
+  CustomBookingController.updateBooked
 );
 
 router.delete(
   '/:id',
   auth(ENUM_USER_ROLE.TRAVELER),
-  BookedHotelController.deleteBookedHotel
+  CustomBookingController.deleteBooked
 );
 
-export const BookedHotelRouter = router;
+export const CustomBookedRouter = router;
