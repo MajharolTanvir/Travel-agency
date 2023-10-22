@@ -11,22 +11,23 @@ datasource db {
 }
 
 model User {
-  id            String        @id @default(uuid())
+  id            String          @id @default(uuid())
   firstName     String
   middleName    String?
   lastName      String
-  role          UserRole      @default(traveler)
-  email         String        @unique
+  role          UserRole        @default(traveler)
+  email         String          @unique
   password      String
   token         String?
-  validation    Boolean       @default(false)
+  validation    Boolean         @default(false)
   confirmedCode Int?
   Profile       Profile[]
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
   Reviews       Reviews[]
   BookedHotel   BookedHotel[]
   PackagePlan   PackagePlan[]
+  BookedPackage BookedPackage[]
 
   @@map("users")
 }
@@ -176,7 +177,7 @@ model PackagePlan {
   hotelId        String?
   guideId        String
   travelerSize   Int
-  bookedTraveler Int
+  bookedTraveler Int             @default(0)
   startDate      String
   endDate        String
   startLocation  String
@@ -189,6 +190,7 @@ model PackagePlan {
   updatedAt      DateTime        @updatedAt
   Reviews        Reviews[]
   PackagePlaces  PackagePlaces[]
+  BookedPackage  BookedPackage[]
 
   @@map("package_plans")
 }
@@ -204,11 +206,14 @@ model PackagePlaces {
 }
 
 model BookedPackage {
-  id                 String @id @default(uuid())
+  id                 String      @id @default(uuid())
   userId             String
-  travelingMember    String
+  travelingMember    Int
   contactNo          String
   emergencyContactNo String
+  packageId          String
+  packagePlan        PackagePlan @relation(fields: [packageId], references: [id])
+  user               User        @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
