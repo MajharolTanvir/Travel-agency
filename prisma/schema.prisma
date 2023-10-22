@@ -11,21 +11,22 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(uuid())
-  firstName    String
-  middleName   String?
-  lastName     String
-  role         UserRole      @default(traveler)
-  email        String        @unique
-  password     String
-  token        String?
-  confirmdCode String?
-  Profile      Profile[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  Reviews      Reviews[]
-  BookedHotel  BookedHotel[]
-  PackagePlan  PackagePlan[]
+  id            String        @id @default(uuid())
+  firstName     String
+  middleName    String?
+  lastName      String
+  role          UserRole      @default(traveler)
+  email         String        @unique
+  password      String
+  token         String?
+  validation    Boolean       @default(false)
+  confirmedCode Int?
+  Profile       Profile[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  Reviews       Reviews[]
+  BookedHotel   BookedHotel[]
+  PackagePlan   PackagePlan[]
 
   @@map("users")
 }

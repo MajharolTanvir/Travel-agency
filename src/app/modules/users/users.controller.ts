@@ -3,6 +3,7 @@ import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import httpStatus from 'http-status';
 import { UsersService } from './users.services';
+import { JwtPayload } from 'jsonwebtoken';
 
 const signup = catchAsync(async (req: Request, res: Response) => {
   const user = req.body;
@@ -11,14 +12,26 @@ const signup = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'User signup successfully',
+    message: 'Verification mail sent successfully',
     data: result,
   });
 });
 
-const signin = catchAsync(async (req: Request, res: Response) => {
+const confirmedSignup = catchAsync(async (req: Request, res: Response) => {
+  const { userEmail } = req.user as JwtPayload;
+  const result = await UsersService.confirmedSignup(req.body, userEmail);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Account has been created successfully',
+    data: result,
+  });
+});
+
+const signIn = catchAsync(async (req: Request, res: Response) => {
   const userData = req.body;
-  const result = await UsersService.signin(userData);
+  const result = await UsersService.signIn(userData);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -53,12 +66,9 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
-
 const getAllAdmin = catchAsync(async (req: Request, res: Response) => {
-  const result = await UsersService.getAllAdmin();
+  const result = await UsersService.getAllHeadManager();
   console.log(result);
-
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -67,11 +77,10 @@ const getAllAdmin = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
-
 export const UsersController = {
   signup,
-  signin,
+  confirmedSignup,
+  signIn,
   forgetPassword,
   resetPassword,
   getAllAdmin,

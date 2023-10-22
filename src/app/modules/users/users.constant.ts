@@ -1,1 +1,7 @@
-export const roles = ['SUPER_ADMIN', 'ADMIN', 'USER']
+export const roles = [
+  'super_admin',
+  'head_manager',
+  'district_coordinator',
+  'guide',
+  'traveler',
+];

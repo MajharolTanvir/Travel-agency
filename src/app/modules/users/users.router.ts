@@ -9,10 +9,20 @@ const router = express.Router();
 
 router.post(
   '/signup',
-  validateRequest(UsersValidation.signupZodSchema), 
+  validateRequest(UsersValidation.signupZodSchema),
   UsersController.signup
 );
-router.post('/signin',validateRequest(UsersValidation.signinZodSchema), UsersController.signin);
+router.post(
+  '/signin',
+  validateRequest(UsersValidation.signInZodSchema),
+  UsersController.signIn
+);
+
+router.post(
+  '/confirm-signup',
+  auth(ENUM_USER_ROLE.TRAVELER),
+  UsersController.confirmedSignup
+);
 
 router.post('/forget-password', UsersController.forgetPassword);
 router.post('/reset-password', UsersController.resetPassword);

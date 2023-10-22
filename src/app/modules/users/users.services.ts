@@ -50,22 +50,60 @@ const sendResetPasswordWithMail = (
   );
 };
 
+const sendSignUpCode = (name: string, email: string, code: number | null) => {
+  const transporter = nodemailer.createTransport({
+    host: config.emailHost,
+    port: 25,
+    secure: false,
+    requireTLS: true,
+    auth: {
+      user: config.emailUser,
+      pass: config.emailPassword,
+    },
+  });
+
+  const mailOptions = {
+    from: config.emailUser,
+    to: email,
+    subject: 'Quick tour plan website signup validation!',
+    html: `
+        <div style="width: 50%; margin: 0 auto; text-align: center;">
+            <h2>Dear valued user ${name},</h2>
+            <p>Thank you for signing up on our website. To complete your registration, please enter the verification code below:</p>
+            <h1 style="font-size: 2rem; background-color: #007bff; color: #fff; padding: 10px; border-radius: 5px;">${code}</h1>
+            <p>If you did not request this code, please ignore this message.</p>
+            <p>Thank you for choosing our services!</p>
+        </div>`,
+  };
+
+  transporter.sendMail(
+    mailOptions,
+    function (error: any, info: { response: any }) {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.info('Email sent:', info.response);
+      }
+    }
+  );
+};
+
 const signup = async (userData: User) => {
+  const min = 100000;
+  const max = 999999;
+  const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+
   userData.password = await bcrypt.hash(
     userData.password,
     Number(config.bcrypt_salt_rounds)
   );
+  userData.confirmedCode = randomNum;
 
   const user = await prisma.user.create({
     data: userData,
   });
 
-
-  await prisma.profile.create({
-    data: {
-      userId: user?.id,
-    },
-  });
+  await sendSignUpCode(user.firstName, user.email, user.confirmedCode);
 
   const { id: userId, email: userEmail, role } = user;
   const accessToken = JwtHelpers.createToken(
@@ -73,21 +111,40 @@ const signup = async (userData: User) => {
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
   );
-
-  const refreshToken = JwtHelpers.createToken(
-    { userId, userEmail, role },
-    config.jwt.refresh_secret as Secret,
-    config.jwt.refresh_expires_in as string
-  );
-
-  return {
-    user,
-    accessToken,
-    refreshToken,
-  };
+  return accessToken;
 };
 
-const signin = async (loginData: User) => {
+const confirmedSignup = async (data: Partial<User>, userEmail: string) => {
+  const existUser = await prisma.user.findFirst({
+    where: {
+      email: userEmail,
+    },
+  });
+
+  if (!existUser) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Email not found!');
+  }
+
+  if (existUser.confirmedCode === data.confirmedCode) {
+    await prisma.user.update({
+      where: {
+        email: userEmail,
+      },
+      data: {
+        validation: true,
+        confirmedCode: 0,
+      },
+    });
+  }
+
+  await prisma.profile.create({
+    data: {
+      userId: existUser?.id,
+    },
+  });
+};
+
+const signIn = async (loginData: User) => {
   const { email, password } = loginData;
 
   const isUserExist = await prisma.user.findUnique({
@@ -162,10 +219,10 @@ const resetPassword = async (token: string, password: string) => {
   }
 };
 
-const getAllAdmin = async () => {
+const getAllHeadManager = async () => {
   const adminsProfile = await prisma.user.findMany({
     where: {
-      role: 'admin',
+      role: 'head_manager',
     },
     include: {
       Profile: true,
@@ -176,8 +233,9 @@ const getAllAdmin = async () => {
 
 export const UsersService = {
   signup,
-  signin,
+  confirmedSignup,
+  signIn,
   forgetPassword,
   resetPassword,
-  getAllAdmin,
+  getAllHeadManager,
 };
