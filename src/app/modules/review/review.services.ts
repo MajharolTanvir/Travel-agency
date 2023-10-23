@@ -25,7 +25,7 @@ const addReview = async (
 const getAllReviews = async (id: string): Promise<Reviews[] | null> => {
   return await prisma.reviews.findMany({
     where: {
-      roomId: id,
+      serviceId: id,
     },
   });
 };

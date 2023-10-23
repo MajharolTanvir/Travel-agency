@@ -19,7 +19,7 @@ const signupZodSchema = zod_1.z.object({
         token: zod_1.z.string().optional(),
     }),
 });
-const signinZodSchema = zod_1.z.object({
+const signInZodSchema = zod_1.z.object({
     body: zod_1.z.object({
         email: zod_1.z.string({
             required_error: 'Email is required',
@@ -52,6 +52,6 @@ const userProfileZodSchema = zod_1.z.object({
 });
 exports.UsersValidation = {
     signupZodSchema,
-    signinZodSchema,
+    signInZodSchema,
     userProfileZodSchema,
 };

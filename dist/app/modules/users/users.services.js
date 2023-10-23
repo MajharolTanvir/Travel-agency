@@ -51,26 +51,80 @@ const sendResetPasswordWithMail = (name, email, token) => {
         }
     });
 };
+const sendSignUpCode = (name, email, code) => {
+    const transporter = nodemailer_1.default.createTransport({
+        host: config_1.default.emailHost,
+        port: 25,
+        secure: false,
+        requireTLS: true,
+        auth: {
+            user: config_1.default.emailUser,
+            pass: config_1.default.emailPassword,
+        },
+    });
+    const mailOptions = {
+        from: config_1.default.emailUser,
+        to: email,
+        subject: 'Quick tour plan website signup validation!',
+        html: `
+        <div style="width: 50%; margin: 0 auto; text-align: center;">
+            <h2>Dear valued user ${name},</h2>
+            <p>Thank you for signing up on our website. To complete your registration, please enter the verification code below:</p>
+            <h1 style="font-size: 2rem; background-color: #007bff; color: #fff; padding: 10px; border-radius: 5px;">${code}</h1>
+            <p>If you did not request this code, please ignore this message.</p>
+            <p>Thank you for choosing our services!</p>
+        </div>`,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.error('Error sending email:', error);
+        }
+        else {
+            console.info('Email sent:', info.response);
+        }
+    });
+};
 const signup = (userData) => __awaiter(void 0, void 0, void 0, function* () {
+    const min = 100000;
+    const max = 999999;
+    const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
     userData.password = yield bcrypt_1.default.hash(userData.password, Number(config_1.default.bcrypt_salt_rounds));
+    userData.confirmedCode = randomNum;
     const user = yield prisma_1.prisma.user.create({
         data: userData,
     });
-    yield prisma_1.prisma.profile.create({
-        data: {
-            userId: user === null || user === void 0 ? void 0 : user.id,
-        },
-    });
+    yield sendSignUpCode(user.firstName, user.email, user.confirmedCode);
     const { id: userId, email: userEmail, role } = user;
     const accessToken = jwtHelpers_1.JwtHelpers.createToken({ userId, userEmail, role }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
-    const refreshToken = jwtHelpers_1.JwtHelpers.createToken({ userId, userEmail, role }, config_1.default.jwt.refresh_secret, config_1.default.jwt.refresh_expires_in);
-    return {
-        user,
-        accessToken,
-        refreshToken,
-    };
+    return accessToken;
 });
-const signin = (loginData) => __awaiter(void 0, void 0, void 0, function* () {
+const confirmedSignup = (data, userEmail) => __awaiter(void 0, void 0, void 0, function* () {
+    const existUser = yield prisma_1.prisma.user.findFirst({
+        where: {
+            email: userEmail,
+        },
+    });
+    if (!existUser) {
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Email not found!');
+    }
+    if (existUser.confirmedCode === data.confirmedCode) {
+        yield prisma_1.prisma.user.update({
+            where: {
+                email: userEmail,
+            },
+            data: {
+                validation: true,
+                confirmedCode: 0,
+            },
+        });
+    }
+    yield prisma_1.prisma.profile.create({
+        data: {
+            userId: existUser === null || existUser === void 0 ? void 0 : existUser.id,
+        },
+    });
+});
+const signIn = (loginData) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = loginData;
     const isUserExist = yield prisma_1.prisma.user.findUnique({
         where: {
@@ -124,10 +178,10 @@ const resetPassword = (token, password) => __awaiter(void 0, void 0, void 0, fun
         throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, 'This token has been expired');
     }
 });
-const getAllAdmin = () => __awaiter(void 0, void 0, void 0, function* () {
+const getAllHeadManager = () => __awaiter(void 0, void 0, void 0, function* () {
     const adminsProfile = yield prisma_1.prisma.user.findMany({
         where: {
-            role: 'admin',
+            role: 'head_manager',
         },
         include: {
             Profile: true,
@@ -135,10 +189,35 @@ const getAllAdmin = () => __awaiter(void 0, void 0, void 0, function* () {
     });
     return adminsProfile;
 });
+const getAllCoOrdinator = () => __awaiter(void 0, void 0, void 0, function* () {
+    const coOrdinatorProfile = yield prisma_1.prisma.user.findMany({
+        where: {
+            role: 'district_coordinator',
+        },
+        include: {
+            Profile: true,
+        },
+    });
+    return coOrdinatorProfile;
+});
+const getAllGuide = () => __awaiter(void 0, void 0, void 0, function* () {
+    const guideProfile = yield prisma_1.prisma.user.findMany({
+        where: {
+            role: 'guide',
+        },
+        include: {
+            Profile: true,
+        },
+    });
+    return guideProfile;
+});
 exports.UsersService = {
     signup,
-    signin,
+    confirmedSignup,
+    signIn,
     forgetPassword,
     resetPassword,
-    getAllAdmin,
+    getAllHeadManager,
+    getAllCoOrdinator,
+    getAllGuide,
 };

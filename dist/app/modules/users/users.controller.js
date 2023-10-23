@@ -23,13 +23,23 @@ const signup = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0,
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'User signup successfully',
+        message: 'Verification mail sent successfully',
         data: result,
     });
 }));
-const signin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const confirmedSignup = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userEmail } = req.user;
+    const result = yield users_services_1.UsersService.confirmedSignup(req.body, userEmail);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Account has been created successfully',
+        data: result,
+    });
+}));
+const signIn = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userData = req.body;
-    const result = yield users_services_1.UsersService.signin(userData);
+    const result = yield users_services_1.UsersService.signIn(userData);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
@@ -58,20 +68,43 @@ const resetPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         data: result,
     });
 }));
-const getAllAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield users_services_1.UsersService.getAllAdmin();
+const getAllHeadManager = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield users_services_1.UsersService.getAllHeadManager();
     console.log(result);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'Admin retrieved successfully',
+        message: 'Head manager retrieved successfully',
+        data: result,
+    });
+}));
+const getAllCoOrdinator = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield users_services_1.UsersService.getAllCoOrdinator();
+    console.log(result);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Coordinators retrieved successfully',
+        data: result,
+    });
+}));
+const getAllGuide = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield users_services_1.UsersService.getAllGuide();
+    console.log(result);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Guides retrieved successfully',
         data: result,
     });
 }));
 exports.UsersController = {
     signup,
-    signin,
+    confirmedSignup,
+    signIn,
     forgetPassword,
     resetPassword,
-    getAllAdmin,
+    getAllHeadManager,
+    getAllCoOrdinator,
+    getAllGuide,
 };

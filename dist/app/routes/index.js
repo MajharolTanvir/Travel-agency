@@ -4,9 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const addToCart_router_1 = require("../modules/addToCart/addToCart.router");
 const blog_router_1 = require("../modules/blog/blog.router");
-const bookedHotel_router_1 = require("../modules/bookedHotel/bookedHotel.router");
 const district_router_1 = require("../modules/district/district.router");
 const division_router_1 = require("../modules/division/division.router");
 const facilitiesOptions_router_1 = require("../modules/facilitiesOptions/facilitiesOptions.router");
@@ -18,6 +16,10 @@ const review_router_1 = require("../modules/review/review.router");
 const room_router_1 = require("../modules/room/room.router");
 const roomFacilities_router_1 = require("../modules/roomFacilities/roomFacilities.router");
 const users_router_1 = require("../modules/users/users.router");
+const bookedCustomly_router_1 = require("../modules/bookedCustomly/bookedCustomly.router");
+const bookedHotel_router_1 = require("../modules/bookedPackage/bookedHotel.router");
+const transport_router_1 = require("../modules/transport/transport.router");
+const packagePlan_router_1 = require("../modules/packagePlan/packagePlan.router");
 const router = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -57,12 +59,12 @@ const moduleRoutes = [
         routes: roomFacilities_router_1.RoomFacilitiesRouter,
     },
     {
-        path: '/add-to-cart',
-        routes: addToCart_router_1.AddToCartRouter,
+        path: '/booked-package',
+        routes: bookedCustomly_router_1.CustomBookedRouter,
     },
     {
-        path: '/booked-hotel',
-        routes: bookedHotel_router_1.BookedHotelRouter,
+        path: '/custom-booked',
+        routes: bookedHotel_router_1.BookedPackageRouter,
     },
     {
         path: '/review',
@@ -75,6 +77,14 @@ const moduleRoutes = [
     {
         path: '/feedback',
         routes: feedBackForm_router_1.FeedbackRouter,
+    },
+    {
+        path: '/transport',
+        routes: transport_router_1.TransportRouter,
+    },
+    {
+        path: '/package-plan',
+        routes: packagePlan_router_1.PackagePlanRouter,
     },
 ];
 moduleRoutes.forEach(route => router.use(route.path, route.routes));

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { BookedHotel, BookedPackage } from '@prisma/client';
+import { BookedPackage } from '@prisma/client';
 import { prisma } from '../../../shared/prisma';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
@@ -63,7 +63,7 @@ const singleBookedPackage = async (id: string) => {
 
 const updateBookedPackage = async (
   id: string,
-  bookingData: Partial<BookedHotel>
+  bookingData: Partial<BookedPackage>
 ) => {
   const bookedPackage = await prisma.bookedPackage.update({
     where: {
@@ -75,7 +75,7 @@ const updateBookedPackage = async (
 };
 
 const deleteBookedPackage = async (id: string) => {
-  const bookedPackage = await prisma.bookedHotel.delete({
+  const bookedPackage = await prisma.bookedPackage.delete({
     where: {
       id,
     },
