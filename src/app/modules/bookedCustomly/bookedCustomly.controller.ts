@@ -62,10 +62,53 @@ const deleteBooked = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+
+const createTransportBooked = catchAsync(async (req: Request, res: Response) => {
+  const result = await customBookingServices.createTransportBooked(req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Transport booked successfully',
+    data: result,
+  });
+});
+
+const updateTransportBooked = catchAsync(async (req: Request, res: Response) => {
+  const result = await customBookingServices.updateTransportBooked(
+    req.params.id,
+    req.body
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Transport booked updated successfully',
+    data: result,
+  });
+});
+
+const deleteTransportBooked = catchAsync(async (req: Request, res: Response) => {
+  const result = await customBookingServices.deleteTransportBooked(
+    req.params.id
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Custom booked deleted successfully',
+    data: result,
+  });
+});
+
+
 export const CustomBookingController = {
   createBooked,
   getBooked,
   singleBooked,
   updateBooked,
   deleteBooked,
+  createTransportBooked,
+  updateTransportBooked,
+  deleteTransportBooked,
 };

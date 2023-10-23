@@ -49,4 +49,26 @@ router.delete(
   CustomBookingController.deleteBooked
 );
 
+router.post(
+  '/create-transport',
+  auth(ENUM_USER_ROLE.TRAVELER),
+  CustomBookingController.createTransportBooked
+);
+
+router.patch(
+  '/:id/transport-booked',
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.TRAVELER,
+    ENUM_USER_ROLE.HEAD_MANAGER
+  ),
+  CustomBookingController.updateTransportBooked
+);
+
+router.delete(
+  '/:id',
+  auth(ENUM_USER_ROLE.TRAVELER),
+  CustomBookingController.deleteTransportBooked
+);
+
 export const CustomBookedRouter = router;
