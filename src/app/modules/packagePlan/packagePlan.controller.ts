@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import catchAsync from '../../../shared/catchAsync';
-import { PackagePlanServices } from './packagePlan.services';
-import sendResponse from '../../../shared/sendResponse';
 import httpStatus from 'http-status';
-import pick from '../../../shared/pick';
 import { paginationFields } from '../../../constants/pagination';
+import catchAsync from '../../../shared/catchAsync';
+import pick from '../../../shared/pick';
+import sendResponse from '../../../shared/sendResponse';
 import { packageFilterAbleField } from './packagePlan.constant';
+import { PackagePlanServices } from './packagePlan.services';
 
 const createPackage = catchAsync(async (req: Request, res: Response) => {
   const result = await PackagePlanServices.createPackage(req.body);
@@ -80,16 +80,24 @@ const createPackagePlaces = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const updatePackagePlaces = catchAsync(async (req: Request, res: Response) => {
-  const result = await PackagePlanServices.updatePackagePlaces(
-    req.params.id,
-    req.body
-  );
+const getPackagePlaces = catchAsync(async (req: Request, res: Response) => {
+  const result = await PackagePlanServices.getPackagePlaces();
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Package updated successfully!',
+    message: 'Package places retrieved successfully!',
+    data: result.data,
+  });
+});
+
+const deletePackagePlaces = catchAsync(async (req: Request, res: Response) => {
+  const result = await PackagePlanServices.deletePackagePlaces(req.params.id,req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Package deleted successfully!',
     data: result,
   });
 });
@@ -101,5 +109,6 @@ export const PackagePlanController = {
   updatePackage,
   deletePackage,
   createPackagePlaces,
-  updatePackagePlaces,
+  getPackagePlaces,
+  deletePackagePlaces,
 };

@@ -72,7 +72,7 @@ const updateBookedPackage = (id, bookingData) => __awaiter(void 0, void 0, void 
     return bookedPackage;
 });
 const deleteBookedPackage = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const bookedPackage = yield prisma_1.prisma.bookedHotel.delete({
+    const bookedPackage = yield prisma_1.prisma.bookedPackage.delete({
         where: {
             id,
         },

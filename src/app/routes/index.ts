@@ -56,11 +56,11 @@ const moduleRoutes = [
     routes: RoomFacilitiesRouter,
   },
   {
-    path: '/booked-package',
+    path: '/custom-booked',
     routes: CustomBookedRouter,
   },
   {
-    path: '/custom-booked',
+    path: '/booked-package',
     routes: BookedPackageRouter,
   },
   {

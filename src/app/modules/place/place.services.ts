@@ -22,7 +22,6 @@ const getAllPlace = async (
 ) => {
   const { limit, page, skip } = paginationHelpers.calculatePagination(options);
   const { searchTerm, ...filterData } = filters;
-
   const andConditions = [];
 
   if (searchTerm) {

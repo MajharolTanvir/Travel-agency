@@ -14,15 +14,9 @@ router.post(
   PlacesController.createPlace
 );
 
-router.get(
-  '/',
-  PlacesController.getAllPlace
-);
+router.get('/', PlacesController.getAllPlace);
 
-router.get(
-  '/:id',
-  PlacesController.getSinglePlace
-);
+router.get('/:id', PlacesController.getSinglePlace);
 
 router.patch(
   '/:id',

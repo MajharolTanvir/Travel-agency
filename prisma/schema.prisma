@@ -25,9 +25,9 @@ model User {
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   Reviews        Reviews[]
-  PackagePlan    PackagePlan[]
   BookedPackage  BookedPackage[]
   BookedCustomly BookedCustomly[]
+  FeedbackForm   FeedbackForm[]
 
   @@map("users")
 }
@@ -91,7 +91,7 @@ model Place {
 }
 
 model Hotel {
-  id             String        @id @default(uuid())
+  id             String    @id @default(uuid())
   title          String
   hotelImage     String
   description    String
@@ -99,12 +99,11 @@ model Hotel {
   contactNo      String
   location       String
   mapLocationUrl String?
-  district       District      @relation(fields: [districtId], references: [id])
+  district       District  @relation(fields: [districtId], references: [id])
   hotelType      HotelType
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
   Room           Room[]
-  PackagePlan    PackagePlan[]
 
   @@map("hotels")
 }
@@ -174,8 +173,6 @@ model PackagePlan {
   packageName    String
   thumbnail      String
   description    String
-  hotelId        String?
-  guideId        String
   travelerSize   Int
   bookedTraveler Int             @default(0)
   startDate      String
@@ -183,9 +180,8 @@ model PackagePlan {
   startLocation  String
   endLocation    String
   contactManager String
-  planStatus     Confirmation    @default(Panding)
-  hotel          Hotel?          @relation(fields: [hotelId], references: [id])
-  guide          User            @relation(fields: [guideId], references: [id])
+  bookingCost    Int
+  planStatus     Confirmation    @default(Pending)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   Reviews        Reviews[]
@@ -199,6 +195,7 @@ model PackagePlaces {
   id          String      @id @default(uuid())
   packageId   String
   placeId     String
+  added       Boolean     @default(true)
   packagePlan PackagePlan @relation(fields: [packageId], references: [id])
   place       Place       @relation(fields: [placeId], references: [id])
 
@@ -209,6 +206,9 @@ model BookedPackage {
   id                 String      @id @default(uuid())
   userId             String
   travelingMember    Int
+  totalCost          Int
+  transactionId      Int?
+  payment            PaymentStatus      @default(Pending)
   contactNo          String
   emergencyContactNo String
   packageId          String
@@ -252,15 +252,15 @@ model Blog {
 model BookedCustomly {
   id                            String       @id @default(uuid())
   userId                        String
-  roomId                        String
-  roomCheckInDate               String
-  roomCheckOutDate              String
-  transportReservationStartDate String
-  transportReservationEndDate   String
-  roomConfirmation              Confirmation @default(Panding)
+  roomId                        String?
+  roomCheckInDate               String?
+  roomCheckOutDate              String?
+  transportReservationStartDate String?
+  transportReservationEndDate   String?
+  roomConfirmation              Confirmation @default(Pending)
   roomNo                        String?
   roomFloor                     String?
-  room                          Room         @relation(fields: [roomId], references: [id])
+  room                          Room?        @relation(fields: [roomId], references: [id])
   user                          User         @relation(fields: [userId], references: [id])
 
   createdAt       DateTime          @default(now())
@@ -272,10 +272,10 @@ model BookedCustomly {
 
 model TransportBooked {
   bookedId        String
-  transportId     String
-  transport       Transport      @relation(fields: [transportId], references: [id])
-  bookedPackageId String
-  bookedPackage   BookedCustomly @relation(fields: [bookedPackageId], references: [id])
+  transportId     String?
+  transport       Transport?      @relation(fields: [transportId], references: [id])
+  bookedPackageId String?
+  bookedPackage   BookedCustomly? @relation(fields: [bookedPackageId], references: [id])
 
   @@id([bookedId])
 }
@@ -285,6 +285,7 @@ model FeedbackForm {
   userId      String
   subject     String
   description String
+  user        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -311,7 +312,7 @@ enum HotelType {
 }
 
 enum Confirmation {
-  Panding
+  Pending
   Confirmed
   Canceled
   Completed
@@ -320,6 +321,11 @@ enum Confirmation {
 enum TransportType {
   ByRoad
   ByBoat
+}
+
+enum PaymentStatus {
+  Pending
+  Success
 }
 
 // wifi                    Boolean @default(false)

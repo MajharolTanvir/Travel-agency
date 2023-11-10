@@ -22,7 +22,7 @@ router.patch(
 
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.TRAVELER),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
   FeedbackController.deleteFeedback
 );
 

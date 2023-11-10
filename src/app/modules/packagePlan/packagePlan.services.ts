@@ -1,16 +1,14 @@
 import { PackagePlaces, PackagePlan, Prisma } from '@prisma/client';
-import { prisma } from '../../../shared/prisma';
-import { IPaginationOptions } from '../../../interfaces/pagination';
-import { IPackageFilterType } from './packagePlan.interface';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
+import { IPaginationOptions } from '../../../interfaces/pagination';
+import { prisma } from '../../../shared/prisma';
 import { packageFilterAbleField } from './packagePlan.constant';
+import { IPackageFilterType } from './packagePlan.interface';
 
 const createPackage = async (data: PackagePlan) => {
   const result = await prisma.packagePlan.create({
     data,
     include: {
-      guide: true,
-      hotel: true,
       PackagePlaces: true,
       Reviews: true,
     },
@@ -58,9 +56,11 @@ const getAllPackage = async (
     skip,
     take: limit,
     include: {
-      guide: true,
-      hotel: true,
-      PackagePlaces: true,
+      PackagePlaces: {
+        include: {
+          place: true,
+        },
+      },
       Reviews: true,
     },
     orderBy:
@@ -78,7 +78,7 @@ const getAllPackage = async (
       total,
       page,
       limit,
-    },
+    }, 
     data: result,
   };
 };
@@ -89,9 +89,11 @@ const getSinglePackage = async (id: string) => {
       id,
     },
     include: {
-      guide: true,
-      hotel: true,
-      PackagePlaces: true,
+      PackagePlaces: {
+        include: {
+          place: true,
+        },
+      },
       Reviews: true,
     },
   });
@@ -106,8 +108,6 @@ const updatePackage = async (id: string, data: Partial<PackagePlan>) => {
     },
     data,
     include: {
-      guide: true,
-      hotel: true,
       PackagePlaces: true,
       Reviews: true,
     },
@@ -127,19 +127,31 @@ const deletePackage = async (id: string) => {
 };
 
 const createPackagePlaces = async (data: PackagePlaces) => {
-  const result = await prisma.packagePlaces.createMany({
+  const result = await prisma.packagePlaces.create({
     data,
   });
 
   return result;
 };
 
-const updatePackagePlaces = async (id: string, data: PackagePlaces) => {
-  const result = await prisma.packagePlaces.update({
-    where: {
-      id
+const getPackagePlaces = async () => {
+  const result = await prisma.packagePlaces.findMany({
+    include: {
+      packagePlan: true,
+      place: true,
     },
-    data,
+  });
+
+  return { data: result };
+};
+
+const deletePackagePlaces = async (id: string, data: PackagePlaces) => {
+  const result = await prisma.packagePlaces.delete({
+    where: {
+      id,
+      placeId: data.placeId,
+      packageId: data.packageId,
+    },
   });
 
   return result;
@@ -152,5 +164,6 @@ export const PackagePlanServices = {
   updatePackage,
   deletePackage,
   createPackagePlaces,
-  updatePackagePlaces
-}
+  getPackagePlaces,
+  deletePackagePlaces,
+};

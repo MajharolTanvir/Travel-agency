@@ -8,7 +8,11 @@ const router = express.Router();
 router.post(
   '/',
   //   validateRequest(PlaceZodValidation.createPlace),
-  auth(ENUM_USER_ROLE.TRAVELER),
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.HEAD_MANAGER,
+    ENUM_USER_ROLE.TRAVELER
+  ),
   BookedPackageController.createBookedPackage
 );
 
@@ -35,17 +39,13 @@ router.get(
 router.patch(
   '/:id',
   //   validateRequest(PlaceZodValidation.updatePlace),
-  auth(
-    ENUM_USER_ROLE.SUPER_ADMIN,
-    ENUM_USER_ROLE.TRAVELER,
-    ENUM_USER_ROLE.HEAD_MANAGER
-  ),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
   BookedPackageController.updateBookedPackage
 );
 
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.TRAVELER),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
   BookedPackageController.deleteBookedPackage
 );
 

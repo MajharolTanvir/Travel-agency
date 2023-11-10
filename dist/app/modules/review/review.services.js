@@ -32,7 +32,7 @@ const addReview = (userId, reviewData) => __awaiter(void 0, void 0, void 0, func
 const getAllReviews = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return yield prisma_1.prisma.reviews.findMany({
         where: {
-            roomId: id,
+            serviceId: id,
         },
     });
 });

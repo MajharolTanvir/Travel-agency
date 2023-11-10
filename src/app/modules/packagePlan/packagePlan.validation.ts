@@ -11,11 +11,7 @@ const createPackagePlan = z.object({
     description: z.string({
       required_error: 'description is required',
     }),
-    hotelId: z.string().optional(),
-    guideId: z.string({
-      required_error: 'Guide id is required',
-    }),
-    travelerSize: z.string({
+    travelerSize: z.number({
       required_error: 'Traveler Size is required',
     }),
     startDate: z.string({
@@ -24,7 +20,10 @@ const createPackagePlan = z.object({
     endDate: z.string({
       required_error: 'Traveling end date is required',
     }),
-    StartLocation: z.string({
+    bookingCost: z.number({
+      required_error: 'Booking cost is required',
+    }),
+    startLocation: z.string({
       required_error: 'Start location is required',
     }),
     endLocation: z.string({
@@ -43,10 +42,11 @@ const updatePackagePlan = z.object({
     description: z.string().optional(),
     hotelId: z.string().optional(),
     guideId: z.string().optional(),
-    travelerSize: z.string().optional(),
+    travelerSize: z.number().optional(),
     startDate: z.string().optional(),
     endDate: z.string().optional(),
     StartLocation: z.string().optional(),
+    bookingCost: z.number().optional(),
     endLocation: z.string().optional(),
     contactManager: z.string().optional(),
   }),
