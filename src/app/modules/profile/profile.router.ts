@@ -15,7 +15,14 @@ router.patch(
 
 router.patch(
   '/',
-  auth(ENUM_USER_ROLE.TRAVELER, ENUM_USER_ROLE.HEAD_MANAGER, ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(
+    ENUM_USER_ROLE.TRAVELER,
+    ENUM_USER_ROLE.GUIDE,
+    ENUM_USER_ROLE.MANAGERS,
+    ENUM_USER_ROLE.DISTRICT_COORDINATOR,
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.SUPER_ADMIN
+  ),
   validateRequest(ProfileValidation.profileUpdateZodValidation),
   ProfileController.profileUpdate
 );
@@ -24,7 +31,7 @@ router.get(
   '/user-profile',
   auth(
     ENUM_USER_ROLE.TRAVELER,
-    ENUM_USER_ROLE.HEAD_MANAGER,
+    ENUM_USER_ROLE.ADMIN,
     ENUM_USER_ROLE.SUPER_ADMIN
   ),
   ProfileController.getProfile
@@ -32,7 +39,11 @@ router.get(
 
 router.get(
   '/:id',
-  auth(ENUM_USER_ROLE.TRAVELER, ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(
+    ENUM_USER_ROLE.TRAVELER,
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.SUPER_ADMIN
+  ),
   ProfileController.getSingleProfile
 );
 
@@ -40,7 +51,7 @@ router.get(
   '/',
   auth(
     ENUM_USER_ROLE.TRAVELER,
-    ENUM_USER_ROLE.HEAD_MANAGER,
+    ENUM_USER_ROLE.ADMIN,
     ENUM_USER_ROLE.SUPER_ADMIN
   ),
   ProfileController.getAllProfile

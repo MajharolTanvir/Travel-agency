@@ -9,30 +9,36 @@ const router = express.Router();
 router.post(
   '/',
   validateRequest(DistrictZodValidation.createDistrict),
-  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.DISTRICT_COORDINATOR
+  ),
   DistrictsController.createDistrict
 );
 
-router.get(
-  '/',
-  DistrictsController.getAllDistrict
-);
+router.get('/', DistrictsController.getAllDistrict);
 
-router.get(
-  '/:id',
-  DistrictsController.getSingleDistrict
-);
+router.get('/:id', DistrictsController.getSingleDistrict);
 
 router.patch(
   '/:id',
   validateRequest(DistrictZodValidation.updateDistrict),
-  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.DISTRICT_COORDINATOR
+  ),
   DistrictsController.updateDistrict
 );
 
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.DISTRICT_COORDINATOR
+  ),
   DistrictsController.deleteDistrict
 );
 

@@ -10,7 +10,12 @@ const router = express.Router();
 router.post(
   '/',
   validateRequest(RoomZodValidation.createRoom),
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.DISTRICT_COORDINATOR,
+    ENUM_USER_ROLE.MANAGERS
+  ),
   RoomsController.createRoom
 );
 
@@ -27,13 +32,23 @@ router.get(
 router.patch(
   '/:id',
   validateRequest(RoomZodValidation.updateRoom),
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.MANAGERS,
+    ENUM_USER_ROLE.DISTRICT_COORDINATOR
+  ),
   RoomsController.updateRoom
 );
 
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.ADMIN,
+    ENUM_USER_ROLE.DISTRICT_COORDINATOR,
+    ENUM_USER_ROLE.MANAGERS
+  ),
   RoomsController.deleteRoom
 );
 

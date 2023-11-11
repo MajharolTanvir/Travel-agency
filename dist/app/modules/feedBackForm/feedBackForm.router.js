@@ -13,5 +13,5 @@ router.get('/:id', feedBackForm_controller_1.FeedbackController.getSingleFeedbac
 router.get('/', feedBackForm_controller_1.FeedbackController.getAllFeedback);
 router.post('/', (0, auth_1.default)(user_1.ENUM_USER_ROLE.TRAVELER), feedBackForm_controller_1.FeedbackController.createFeedback);
 router.patch('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.TRAVELER), feedBackForm_controller_1.FeedbackController.updateFeedback);
-router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.TRAVELER), feedBackForm_controller_1.FeedbackController.deleteFeedback);
+router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN), feedBackForm_controller_1.FeedbackController.deleteFeedback);
 exports.FeedbackRouter = router;

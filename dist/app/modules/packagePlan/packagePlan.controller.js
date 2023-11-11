@@ -13,13 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PackagePlanController = void 0;
-const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
-const packagePlan_services_1 = require("./packagePlan.services");
-const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const http_status_1 = __importDefault(require("http-status"));
-const pick_1 = __importDefault(require("../../../shared/pick"));
 const pagination_1 = require("../../../constants/pagination");
+const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
+const pick_1 = __importDefault(require("../../../shared/pick"));
+const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const packagePlan_constant_1 = require("./packagePlan.constant");
+const packagePlan_services_1 = require("./packagePlan.services");
 const createPackage = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield packagePlan_services_1.PackagePlanServices.createPackage(req.body);
     (0, sendResponse_1.default)(res, {
@@ -77,12 +77,21 @@ const createPackagePlaces = (0, catchAsync_1.default)((req, res) => __awaiter(vo
         data: result,
     });
 }));
-const updatePackagePlaces = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield packagePlan_services_1.PackagePlanServices.updatePackagePlaces(req.params.id, req.body);
+const getPackagePlaces = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield packagePlan_services_1.PackagePlanServices.getPackagePlaces();
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'Package updated successfully!',
+        message: 'Package places retrieved successfully!',
+        data: result.data,
+    });
+}));
+const deletePackagePlaces = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield packagePlan_services_1.PackagePlanServices.deletePackagePlaces(req.params.id, req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Package deleted successfully!',
         data: result,
     });
 }));
@@ -93,5 +102,6 @@ exports.PackagePlanController = {
     updatePackage,
     deletePackage,
     createPackagePlaces,
-    updatePackagePlaces,
+    getPackagePlaces,
+    deletePackagePlaces,
 };

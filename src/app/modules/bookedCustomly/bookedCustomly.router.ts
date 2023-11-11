@@ -16,7 +16,7 @@ router.get(
   '/',
   auth(
     ENUM_USER_ROLE.SUPER_ADMIN,
-    ENUM_USER_ROLE.HEAD_MANAGER,
+    ENUM_USER_ROLE.ADMIN,
     ENUM_USER_ROLE.TRAVELER
   ),
   CustomBookingController.getBooked
@@ -26,7 +26,7 @@ router.get(
   '/:id',
   auth(
     ENUM_USER_ROLE.SUPER_ADMIN,
-    ENUM_USER_ROLE.HEAD_MANAGER,
+    ENUM_USER_ROLE.ADMIN,
     ENUM_USER_ROLE.TRAVELER
   ),
   CustomBookingController.singleBooked
@@ -38,7 +38,7 @@ router.patch(
   auth(
     ENUM_USER_ROLE.SUPER_ADMIN,
     ENUM_USER_ROLE.TRAVELER,
-    ENUM_USER_ROLE.HEAD_MANAGER
+    ENUM_USER_ROLE.ADMIN
   ),
   CustomBookingController.updateBooked
 );
@@ -60,7 +60,7 @@ router.patch(
   auth(
     ENUM_USER_ROLE.SUPER_ADMIN,
     ENUM_USER_ROLE.TRAVELER,
-    ENUM_USER_ROLE.HEAD_MANAGER
+    ENUM_USER_ROLE.ADMIN
   ),
   CustomBookingController.updateTransportBooked
 );

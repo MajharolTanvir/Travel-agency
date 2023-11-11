@@ -9,13 +9,13 @@ const router = express.Router();
 router.post(
   '/',
   validateRequest(PackagePlanValidation.createPackagePlan),
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   PackagePlanController.createPackage
 );
 
 router.post(
   '/package-places',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   PackagePlanController.createPackagePlaces
 );
 
@@ -27,19 +27,19 @@ router.get('/:id', PackagePlanController.getSinglePackage);
 router.patch(
   '/:id',
   validateRequest(PackagePlanValidation.updatePackagePlan),
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   PackagePlanController.updatePackage
 );
 
 router.delete(
   '/delete-place/:id',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   PackagePlanController.deletePackagePlaces
 );
 
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   PackagePlanController.deletePackage
 );
 

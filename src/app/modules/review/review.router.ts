@@ -18,7 +18,7 @@ router.get(
   '/',
   auth(
     ENUM_USER_ROLE.SUPER_ADMIN,
-    ENUM_USER_ROLE.HEAD_MANAGER,
+    ENUM_USER_ROLE.ADMIN,
     ENUM_USER_ROLE.TRAVELER
   ),
   ReviewController.getAllReview

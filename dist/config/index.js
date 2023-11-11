@@ -21,4 +21,5 @@ exports.default = {
     emailUser: process.env.EMAIL_USER,
     emailPassword: process.env.EMAIL_PASSWORD,
     emailHost: process.env.EMAIL_HOST,
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY,
 };

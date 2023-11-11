@@ -21,15 +21,13 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PackagePlanServices = void 0;
-const prisma_1 = require("../../../shared/prisma");
 const paginationHelper_1 = require("../../../helpers/paginationHelper");
+const prisma_1 = require("../../../shared/prisma");
 const packagePlan_constant_1 = require("./packagePlan.constant");
 const createPackage = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.prisma.packagePlan.create({
         data,
         include: {
-            guide: true,
-            hotel: true,
             PackagePlaces: true,
             Reviews: true,
         },
@@ -66,9 +64,11 @@ const getAllPackage = (filters, options) => __awaiter(void 0, void 0, void 0, fu
         skip,
         take: limit,
         include: {
-            guide: true,
-            hotel: true,
-            PackagePlaces: true,
+            PackagePlaces: {
+                include: {
+                    place: true,
+                },
+            },
             Reviews: true,
         },
         orderBy: options.sortBy && options.sortOrder
@@ -93,9 +93,11 @@ const getSinglePackage = (id) => __awaiter(void 0, void 0, void 0, function* () 
             id,
         },
         include: {
-            guide: true,
-            hotel: true,
-            PackagePlaces: true,
+            PackagePlaces: {
+                include: {
+                    place: true,
+                },
+            },
             Reviews: true,
         },
     });
@@ -108,8 +110,6 @@ const updatePackage = (id, data) => __awaiter(void 0, void 0, void 0, function* 
         },
         data,
         include: {
-            guide: true,
-            hotel: true,
             PackagePlaces: true,
             Reviews: true,
         },
@@ -125,17 +125,27 @@ const deletePackage = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const createPackagePlaces = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.prisma.packagePlaces.createMany({
+    const result = yield prisma_1.prisma.packagePlaces.create({
         data,
     });
     return result;
 });
-const updatePackagePlaces = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.prisma.packagePlaces.update({
-        where: {
-            id
+const getPackagePlaces = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield prisma_1.prisma.packagePlaces.findMany({
+        include: {
+            packagePlan: true,
+            place: true,
         },
-        data,
+    });
+    return { data: result };
+});
+const deletePackagePlaces = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield prisma_1.prisma.packagePlaces.delete({
+        where: {
+            id,
+            placeId: data.placeId,
+            packageId: data.packageId,
+        },
     });
     return result;
 });
@@ -146,5 +156,6 @@ exports.PackagePlanServices = {
     updatePackage,
     deletePackage,
     createPackagePlaces,
-    updatePackagePlaces
+    getPackagePlaces,
+    deletePackagePlaces,
 };

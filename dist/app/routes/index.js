@@ -59,11 +59,11 @@ const moduleRoutes = [
         routes: roomFacilities_router_1.RoomFacilitiesRouter,
     },
     {
-        path: '/booked-package',
+        path: '/custom-booked',
         routes: bookedCustomly_router_1.CustomBookedRouter,
     },
     {
-        path: '/custom-booked',
+        path: '/booked-package',
         routes: bookedHotel_router_1.BookedPackageRouter,
     },
     {

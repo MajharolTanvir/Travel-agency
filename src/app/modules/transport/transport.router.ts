@@ -10,7 +10,7 @@ const router = express.Router();
 router.post(
   '/',
   validateRequest(TransportZodValidation.createTransport),
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   TransportsController.createTransport
 );
 
@@ -21,13 +21,13 @@ router.get('/:id', TransportsController.getSingleTransport);
 router.patch(
   '/:id',
   validateRequest(TransportZodValidation.updateTransport),
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   TransportsController.updateTransport
 );
 
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.HEAD_MANAGER),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   TransportsController.deleteTransport
 );
 

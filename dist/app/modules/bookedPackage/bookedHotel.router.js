@@ -11,11 +11,11 @@ const bookedPackage_controller_1 = require("./bookedPackage.controller");
 const router = express_1.default.Router();
 router.post('/', 
 //   validateRequest(PlaceZodValidation.createPlace),
-(0, auth_1.default)(user_1.ENUM_USER_ROLE.TRAVELER), bookedPackage_controller_1.BookedPackageController.createBookedPackage);
+(0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER, user_1.ENUM_USER_ROLE.TRAVELER), bookedPackage_controller_1.BookedPackageController.createBookedPackage);
 router.get('/', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER, user_1.ENUM_USER_ROLE.TRAVELER), bookedPackage_controller_1.BookedPackageController.getBookedPackage);
 router.get('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER, user_1.ENUM_USER_ROLE.TRAVELER), bookedPackage_controller_1.BookedPackageController.singleBookedPackage);
 router.patch('/:id', 
 //   validateRequest(PlaceZodValidation.updatePlace),
-(0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.TRAVELER, user_1.ENUM_USER_ROLE.HEAD_MANAGER), bookedPackage_controller_1.BookedPackageController.updateBookedPackage);
-router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.TRAVELER), bookedPackage_controller_1.BookedPackageController.deleteBookedPackage);
+(0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER), bookedPackage_controller_1.BookedPackageController.updateBookedPackage);
+router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN), bookedPackage_controller_1.BookedPackageController.deleteBookedPackage);
 exports.BookedPackageRouter = router;
