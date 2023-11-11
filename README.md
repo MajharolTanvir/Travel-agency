@@ -1,69 +1,106 @@
-# University Management Core Service
-This guide will walk you through the process of setting up the University Management Core Service Starter project. By following these steps, you will clone the project, install dependencies, and configure Prisma for database management. Let's get started!
+# Quick Tour Plan
+Quick Tour Plan is a website where users can customize their visiting plans. They see the district, places, hotels, rooms, and packages. They book hotel rooms, transports, and guides customized. But They can also go with any tour package.
+
+## Description
+
+- [Live link](https://frontend-part-six.vercel.app/)
+- [Server live link](https://qtp-backend.vercel.app/api/v1/)
+- [Github Front-end link](https://github.com/MajharolTanvir/Travel-agency-frontend-part.git)
+- [Github backend link](https://github.com/MajharolTanvir/Travel-agency-backend.git)
+
+## SRS (SOFTWARE REQUIREMENT SPECIFICATION)
+
+### ENTITY:
+
+- Super_admin
+- Admin
+- district_coordinator
+- Managers
+- Guide
+- support
+- Traveler
+
+## Specific requirements:
+
+### Common functionality:
+
+1. Everyone creates an account as a traveler.
+2. Everyone validated their accounts by mail.
+3. Everyone will log in and log out from the website.
+4. Everyone will update their profile.
+5. Everyone will show the district, places, hotels, rooms, and packages.
+6. Everyone will customize their visiting plan and book group travel.
+
+### Super_admin functionality:
+
+- The super admin can manage all of the users.
+    - Manage all Admins
+    - Manage all Head manager
+    - Manage all Managers
+    - Manage all Guide
+    - Manage all support
+    - Manage all Traveler 
+    
+
+### Admin functionality:
+
+- The admin will make packages.
+- The admin will manage packages.
+- The admin will manage transport.
+- The district coordinator will see all of the traveler feedback.
+
+### District coordinator functionality:
+
+- The district coordinator will create Divisions.
+- The district coordinator will create Districts.
+- The district coordinator will create places.
+- The district coordinator will create room facilities.
+
+### Managers functionality:
+
+- The managers will create hotels.
+- The managers will create rooms.
+- The managers will manage room booking.
+
+### Guide functionality:
+
+- A guide will manage the guide bookings.
+- A guide will post tour photos in the photo gallery.
+- A guide will post blogs about his visit.
+
+### Support user functionality:
+
+- A support member will contact all booked travelers.
+- A support member will communicate all transport 
+- A support member will give support for any issues.
+
+### Traveler functionality:
+
+- Travelers will see the districts, places, hotels, rooms, and guides.
+- Travelers can book any room with a start and end date.
+- Travelers can book any transport for a start and end date.
+- Travelers can book any package by visiting a group tour.
+- After successfully traveling the traveler can give reviews.
+- After successfully traveling the traveler can give feedback.
+
+## Technologies:
+#### Front-end part:
+- Next.js (Page router)
+- Tailwind.css
+- Material UI
+- Jwt decode
+- Swiper
+- Yup
+- Stripe
 
 
-## Installation Steps
-### Follow these steps to clone and set up starter project:
-
-1. `Clone the project:` Open your terminal or command prompt and run the following command to clone the project repository:
-
-```bash
-git clone https://github.com/Programming-Hero-Next-Level-Development/university-management-core-service-starter.git university-management-core-service
-```
-
-2. `Navigate into the project directory:` Use the cd command to navigate into the project directory:
-
-```bash
-cd university-management-core-service
-```
-
-3. `Install project dependencies:` Next, install the project dependencies by running the following command:
-
-```bash
-yarn install
-```
-
-4. Configure Prisma and the database connection:
-
-- Add Prisma as a development dependency by running the following command:
-```bash
-yarn add prisma --save-dev
-```
-
-- Set up your Prisma project by creating the Prisma schema file using the following command:
-```bash
-npx prisma init
-```
-
-- Open the prisma/schema.prisma file and configure your database connection details.
-
-```bash
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-```
-
-- Create a .env file in the project root directory and set the DATABASE_URL environment variable. Replace the placeholders with your database connection details:
-```bash
-DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA"
-```
-
-5. Creating the database schema
-6. Migrate the database schema: Use the following command to create and apply the initial database schema:
-
-```bash
-npx prisma migrate dev --name init
-```
-This command creates a new migration file based on your schema changes and applies it to your database.
-
-6. `Install Prisma Client:` Install the Prisma Client library by running the following command:
-```bash
-yarn add @prisma/client
-```
-
-This command installs the Prisma Client, which provides an interface to interact with your database.
-
-That's it! You have successfully set up the University Management Core Service Starter project. You can now start exploring and working with the codebase. Refer to the project documentation or README for further instructions on how to run and use the core service.
-
-Happy coding!
+#### Backend-end part:
+- Node.js
+- Express.js
+- Prisma
+- PostgreSQL
+- Zod validation
+- Json web token
+- Bcrypt
+- Nodemailer
+- Rendomstring

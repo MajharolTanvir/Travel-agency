@@ -90,6 +90,14 @@ const signup = (userData) => __awaiter(void 0, void 0, void 0, function* () {
     const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
     userData.password = yield bcrypt_1.default.hash(userData.password, Number(config_1.default.bcrypt_salt_rounds));
     userData.confirmedCode = randomNum;
+    const isUserExist = yield prisma_1.prisma.user.findFirst({
+        where: {
+            email: userData.email,
+        },
+    });
+    if (isUserExist) {
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Email already used!');
+    }
     const user = yield prisma_1.prisma.user.create({
         data: userData,
     });
