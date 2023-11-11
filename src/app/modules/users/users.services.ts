@@ -99,6 +99,15 @@ const signup = async (userData: User) => {
   );
   userData.confirmedCode = randomNum;
 
+  const isUserExist = await prisma.user.findFirst({
+    where: {
+      email: userData.email,
+    },
+  });
+
+  if (isUserExist) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already used!');
+  }
   const user = await prisma.user.create({
     data: userData,
   });
@@ -254,7 +263,6 @@ const getAllGuide = async () => {
   });
   return guideProfile;
 };
-
 
 export const UsersService = {
   signup,

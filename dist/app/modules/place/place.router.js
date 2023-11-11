@@ -11,9 +11,9 @@ const validateRequest_1 = __importDefault(require("../../middlewares/validateReq
 const place_validation_1 = require("./place.validation");
 const place_controller_1 = require("./place.controller");
 const router = express_1.default.Router();
-router.post('/', (0, validateRequest_1.default)(place_validation_1.PlaceZodValidation.createPlace), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN), place_controller_1.PlacesController.createPlace);
+router.post('/', (0, validateRequest_1.default)(place_validation_1.PlaceZodValidation.createPlace), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.DISTRICT_COORDINATOR), place_controller_1.PlacesController.createPlace);
 router.get('/', place_controller_1.PlacesController.getAllPlace);
 router.get('/:id', place_controller_1.PlacesController.getSinglePlace);
-router.patch('/:id', (0, validateRequest_1.default)(place_validation_1.PlaceZodValidation.updatePlace), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN), place_controller_1.PlacesController.updatePlace);
-router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN), place_controller_1.PlacesController.deletePlace);
+router.patch('/:id', (0, validateRequest_1.default)(place_validation_1.PlaceZodValidation.updatePlace), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.DISTRICT_COORDINATOR), place_controller_1.PlacesController.updatePlace);
+router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.DISTRICT_COORDINATOR), place_controller_1.PlacesController.deletePlace);
 exports.PlaceRouter = router;

@@ -11,9 +11,9 @@ const validateRequest_1 = __importDefault(require("../../middlewares/validateReq
 const hotel_validation_1 = require("./hotel.validation");
 const hotel_controller_1 = require("./hotel.controller");
 const router = express_1.default.Router();
-router.post('/', (0, validateRequest_1.default)(hotel_validation_1.HotelZodValidation.createHotel), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER), hotel_controller_1.HotelsController.createHotel);
+router.post('/', (0, validateRequest_1.default)(hotel_validation_1.HotelZodValidation.createHotel), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.MANAGERS, user_1.ENUM_USER_ROLE.DISTRICT_COORDINATOR), hotel_controller_1.HotelsController.createHotel);
 router.get('/', hotel_controller_1.HotelsController.getAllHotel);
 router.get('/:id', hotel_controller_1.HotelsController.getSingleHotel);
-router.patch('/:id', (0, validateRequest_1.default)(hotel_validation_1.HotelZodValidation.updateHotel), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER), hotel_controller_1.HotelsController.updateHotel);
-router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER), hotel_controller_1.HotelsController.deleteHotel);
+router.patch('/:id', (0, validateRequest_1.default)(hotel_validation_1.HotelZodValidation.updateHotel), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.MANAGERS, user_1.ENUM_USER_ROLE.DISTRICT_COORDINATOR), hotel_controller_1.HotelsController.updateHotel);
+router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.MANAGERS, user_1.ENUM_USER_ROLE.DISTRICT_COORDINATOR), hotel_controller_1.HotelsController.deleteHotel);
 exports.HotelRouter = router;

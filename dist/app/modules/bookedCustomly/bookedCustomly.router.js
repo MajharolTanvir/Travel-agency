@@ -12,13 +12,13 @@ const router = express_1.default.Router();
 router.post('/', 
 //   validateRequest(PlaceZodValidation.createPlace),
 (0, auth_1.default)(user_1.ENUM_USER_ROLE.TRAVELER), bookedCustomly_controller_1.CustomBookingController.createBooked);
-router.get('/', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER, user_1.ENUM_USER_ROLE.TRAVELER), bookedCustomly_controller_1.CustomBookingController.getBooked);
-router.get('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER, user_1.ENUM_USER_ROLE.TRAVELER), bookedCustomly_controller_1.CustomBookingController.singleBooked);
+router.get('/', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.TRAVELER), bookedCustomly_controller_1.CustomBookingController.getBooked);
+router.get('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.TRAVELER), bookedCustomly_controller_1.CustomBookingController.singleBooked);
 router.patch('/:id', 
 //   validateRequest(PlaceZodValidation.updatePlace),
-(0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.TRAVELER, user_1.ENUM_USER_ROLE.HEAD_MANAGER), bookedCustomly_controller_1.CustomBookingController.updateBooked);
+(0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.TRAVELER, user_1.ENUM_USER_ROLE.ADMIN), bookedCustomly_controller_1.CustomBookingController.updateBooked);
 router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.TRAVELER), bookedCustomly_controller_1.CustomBookingController.deleteBooked);
 router.post('/create-transport', (0, auth_1.default)(user_1.ENUM_USER_ROLE.TRAVELER), bookedCustomly_controller_1.CustomBookingController.createTransportBooked);
-router.patch('/:id/transport-booked', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.TRAVELER, user_1.ENUM_USER_ROLE.HEAD_MANAGER), bookedCustomly_controller_1.CustomBookingController.updateTransportBooked);
+router.patch('/:id/transport-booked', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.TRAVELER, user_1.ENUM_USER_ROLE.ADMIN), bookedCustomly_controller_1.CustomBookingController.updateTransportBooked);
 router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.TRAVELER), bookedCustomly_controller_1.CustomBookingController.deleteTransportBooked);
 exports.CustomBookedRouter = router;

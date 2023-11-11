@@ -11,9 +11,9 @@ const validateRequest_1 = __importDefault(require("../../middlewares/validateReq
 const room_controller_1 = require("./room.controller");
 const room_validation_1 = require("./room.validation");
 const router = express_1.default.Router();
-router.post('/', (0, validateRequest_1.default)(room_validation_1.RoomZodValidation.createRoom), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER), room_controller_1.RoomsController.createRoom);
+router.post('/', (0, validateRequest_1.default)(room_validation_1.RoomZodValidation.createRoom), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.DISTRICT_COORDINATOR, user_1.ENUM_USER_ROLE.MANAGERS), room_controller_1.RoomsController.createRoom);
 router.get('/', room_controller_1.RoomsController.getAllRoom);
 router.get('/:id', room_controller_1.RoomsController.getSingleRoom);
-router.patch('/:id', (0, validateRequest_1.default)(room_validation_1.RoomZodValidation.updateRoom), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER), room_controller_1.RoomsController.updateRoom);
-router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.HEAD_MANAGER), room_controller_1.RoomsController.deleteRoom);
+router.patch('/:id', (0, validateRequest_1.default)(room_validation_1.RoomZodValidation.updateRoom), (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.MANAGERS, user_1.ENUM_USER_ROLE.DISTRICT_COORDINATOR), room_controller_1.RoomsController.updateRoom);
+router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.DISTRICT_COORDINATOR, user_1.ENUM_USER_ROLE.MANAGERS), room_controller_1.RoomsController.deleteRoom);
 exports.RoomRouter = router;
